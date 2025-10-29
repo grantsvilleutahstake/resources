@@ -1,0 +1,22 @@
+body {
+    font-family: Cambria, Cochin, Georgia, Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
+
+}
+
+main{
+    border: solid 1px rgb(89, 89, 89);
+    padding: 10px;
+    margin: 10px auto;
+    width: 70%;
+}
+
+h1 {
+    color: #555;
+}
+
+img#dp-temple {
+    width: 50%;
+}
+
