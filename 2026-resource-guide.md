@@ -3,8 +3,13 @@ layout: default
 title: 2026 Grantsville Utah Stake Resource Guide
 ---
 
+
 {% include header.html %}
 
-{% include contacts-presidency.md %}
+{% include toc.html %}
 
-{% include ward-meeting-times.md %}
+{% include 1-ward-information.html %}
+
+{% include 2-presidency-information.html %}
+
+{% include 3-high-council.html %}
