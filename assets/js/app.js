@@ -95,6 +95,13 @@ async function displayBuildings()
       template.querySelector('.building-description').innerText = building.Address;
       template.querySelector('.map-container').innerHTML = building.MapURL;
 
+      const mapToggle = template.querySelector('.clickable');
+      const map = template.querySelector('.map-container');
+
+      mapToggle.addEventListener('click', () => {
+        toggle(map);
+      })
+
       displayWards(building.BuildingId, div);
       
       parent.appendChild(template);

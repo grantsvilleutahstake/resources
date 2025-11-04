@@ -1,7 +1,5 @@
-function toggle(selector)
+function toggle(element)
 {
-    const element = document.querySelector(selector);
-
     if(element.classList.contains('hidden'))
         element.classList.remove('hidden');
     else

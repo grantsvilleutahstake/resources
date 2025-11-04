@@ -27,6 +27,13 @@ h1, .h1 {
     width: 50vw;
 }
 
+h4, .h4 {
+    margin: 0;
+    padding: 0;
+    font-weight: 300;
+    font-size: .9rem;
+}
+
 a, 
 a:visited {
     color: #990000;
@@ -34,6 +41,15 @@ a:visited {
 
 a:hover {
     color: red;
+}
+
+.clickable {
+    color: maroon;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
 }
 
 
@@ -50,6 +66,12 @@ img#dp-temple {
     justify-content: center;
 }
 
+.centered-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .table {
     display: flex;
     flex-direction: column;
@@ -62,7 +84,25 @@ img#dp-temple {
     margin-top: 10px;
 }
 
-.row
+.row-ward .ward-name {
+    width: 7%;
+    flex-shrink: 0;
+}
+.row-ward .start-time {
+    width: 15%;
+    flex-shrink: 0;
+}
+.row-ward .bishop,
+.row-ward .high-councilor  {
+    width: 25%;
+    flex-shrink: 0;
+}
+.row-ward .youth-night {
+    flex-grow: 1;
+}
+
+.row,
+.row-ward
 {
     display: flex;
     justify-content: space-between;
@@ -71,13 +111,15 @@ img#dp-temple {
     padding-top: 5px;
 }
 
-.row:hover
+.row:hover,
+.row-ward:hover
 {
     background-color: #eee;
 }
 
 .row > div,
-.row-header > div {
+.row-header > div,
+.row-ward > div {
     padding: 0 5px;
 }
 
@@ -91,6 +133,12 @@ img#dp-temple {
 .row-header > div:last-child {
     text-align: right;
     flex-grow: 1;
+}
+
+.row > div.span,
+.row-header > div.span {
+    width: 100% !important;
+    text-align: left !important;
 }
 
 .row-header {
