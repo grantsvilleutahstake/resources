@@ -1,22 +1,43 @@
-<div id="Wards" class="card">
-    <section class="centered card-header">
-        Ward Information / Block Schedule
-    </section>
-
-    <section class="centered">
-        <div class="table contact">
-
-            <div class="row">
-                <div>Church Street Building</div>
-                <div><a target="_blank" href="#">Ward</a></div>
+  <template id="building-row-template">
+    
+    <div class="table contact building-table">
+        <div class="row-header">
+            <div>
+                <div class="building-name"></div>
+                <div class="building-description h4"></div>
             </div>
+            <div>
+                <div class="clickable h4" onclick="toggle('.map-container')">show/hide map</div>
+            </div>
+        </div>
+        <div class="map-container hidden row span"></div>
+    </div>
+  </template>
+    <template id="ward-row-template">
+    
+        <div class="row-ward">
+            <div class="ward-name"></div>
+            <div class="start-time"></div>
+            <div class="bishop"></div>
+            <div class="high-councilor"></div>
+            <div class="youth-night"></div>
+        </div>
+    </div>
+  </template>
+
+    <div id="Wards" class="card">
+        <section class="centered card-header">
+            Ward Information / Block Schedule
+        </section>
+
+        <div id="buildings-container" class="centered-column">
+
 
         </div>
-    </section>
 
-    <section class="centered">
-        <div>
-            <a href="#top">Back to Top</a>
-        </div>
-    </section>
-</div>
+        <section class="centered">
+            <div>
+                <a href="#header">Back to Top</a>
+            </div>
+        </section>
+    </div>

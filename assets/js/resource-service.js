@@ -3,6 +3,7 @@ class ResourceService
    
     baseUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTJ1ibA1o-Sh4vzmHc6pKD0Ss3WfFzIe-qvvSPmG4gca8gLutRYK_dY0EWjsANFgB-pSVm4FOX6RZbH/pub?output=csv&single=true&gid=`
     
+    general = 1284108232;
     presidency = 0;
     presidencyAssignments = 1193891930;
     highCouncil = 1327477659;
@@ -18,6 +19,11 @@ class ResourceService
         const response = await fetch(url);
 
         return response.text();
+    }
+
+    async getGeneralInformation()
+    {
+        return this.getData(this.general);
     }
 
     async getPresidency()
