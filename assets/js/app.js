@@ -23,7 +23,7 @@ async function loadGeneral()
   if(generalInfo) return;
 
   let data = await resourceService.getGeneralInformation();
-  generalInfo = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data[0];
+  generalInfo = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
 }
 
 async function loadOrganizations()
@@ -76,7 +76,9 @@ async function displayGeneralInformation()
 {
   await loadGeneral();
 
-  document.getElementById('title').innerText = generalInfo.Title;
+  const titleRow = generalInfo.find(row => row.Section == 'Header' && row.Key == 'Title')
+
+  document.getElementById('title').innerText = titleRow.Value;
 }
 
 // wards
