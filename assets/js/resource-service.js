@@ -11,6 +11,7 @@ class ResourceService
     organizations = 763076688;
     buildings = 156666937;
     wards = 1720792576;
+    stakeConference = 347409085;
 
     
     async getData(id)
@@ -59,6 +60,11 @@ class ResourceService
     async getOrganizations()
     {
         return this.getData(this.organizations);
+    }
+
+    async getStakeConference()
+    {
+        return this.getData(this.stakeConference);
     }
 
 }

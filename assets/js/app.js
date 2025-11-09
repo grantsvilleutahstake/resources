@@ -8,6 +8,7 @@ let presidency;
 let presidencyAssignments;
 let highCouncil;
 let highCouncilAssignments;
+let stakeConference;
 
 document.addEventListener('DOMContentLoaded', async () => {
     resourceService = new ResourceService();
@@ -15,15 +16,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     displayGeneralInformation();
     displayBuildings();
     displayPresidency();
+    displayHighCouncil();
+    displaySpeakingAssingments();
+    displayStakeConference();
 })
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // begin load data
+let isLoadingGeneral = false;
 async function loadGeneral()
 {
-  if(generalInfo) return;
 
-  let data = await resourceService.getGeneralInformation();
-  generalInfo = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+
+  if(!generalInfo){
+    
+
+    let data = await resourceService.getGeneralInformation();
+    const mappedData = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+    generalInfo = mappedData.map(row => {
+      return {
+        ...row,
+        Value: row.Value.replace(/\r?\n/g, '<br>')
+      }
+    })
+  }
+
 }
 
 async function loadOrganizations()
@@ -36,27 +56,29 @@ async function loadOrganizations()
 
 async function loadWards()
 {
-  if(buildings) return;
+  if(!buildings) {
+    let data = await resourceService.getBuildings();
+    buildings = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+  }
 
-  let data = await resourceService.getBuildings();
-  buildings = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
-
-  if(wards) return;
-
-  data = await resourceService.getWards();
-  wards = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+  if(!wards) {
+    data = await resourceService.getWards();
+    wards = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+  }
 }
-
 
 async function loadPresidency()
 {
-  if(presidency) return;
+  if(!presidency){
 
-  let data = await resourceService.getPresidency();
-  presidency = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+    let data = await resourceService.getPresidency();
+    presidency = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+  }
   
-  data = await resourceService.getPresidencyAssignments();
-  presidencyAssignments = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+  if(!presidencyAssignments){
+    data = await resourceService.getPresidencyAssignments();
+    presidencyAssignments = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+  }
 }
 
 async function loadHighCouncil()
@@ -64,7 +86,7 @@ async function loadHighCouncil()
   if(highCouncil) return;
 
   let data = await resourceService.getHighCouncil();
-  highCouncil = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+  highCouncil = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data.sort((a,b) => b.Senority - a.Seniority);
 
   data = await resourceService.getHighCouncilAssignments();
   highCouncilAssignments = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
@@ -124,8 +146,10 @@ async function displayWards(buildingId, parent)
 
       tmpl.querySelector('.ward-name').innerText = ward.Abbreviation;
       tmpl.querySelector('.start-time').innerText = ward.SacramentMeeting;
-      tmpl.querySelector('.bishop').innerText = ward.Bishop;
-      tmpl.querySelector('.high-councilor').innerText = hc.Name;
+      tmpl.querySelector('#bishop-link').innerText = ward.Bishop;
+      tmpl.querySelector('#bishop-link').href = ward.BishopProfile;
+      tmpl.querySelector('#high-councilor-link').innerText = hc.Name;
+      tmpl.querySelector('#high-councilor-link').href = hc.Profile;
       tmpl.querySelector('.youth-night').innerText = ward.YouthNight;
 
       
@@ -155,6 +179,8 @@ async function displayPresidency()
     people = presidency.filter( p => p.OrganizationId == 101);
     renderPresidencyRows(people, div);
 
+    displayPresidencyAssignments()
+
   }
 }
 
@@ -169,4 +195,95 @@ function renderPresidencyRows(people, parent)
       parent.appendChild(tmpl);
     });
 }
+
+async function displayPresidencyAssignments()
+{
+  await loadPresidency()
+
+  if ('content' in document.createElement('template')) {
+
+    let parent = document.getElementById('presidency-assignments-container');
+    let people = presidency.filter( p => p.CallingId <= 103);
+
+
+    people.forEach((person) => {
+      const tmpl = document.getElementById('presidency-assignments-template').content.cloneNode(true);
+      let assignments = presidencyAssignments.filter(a => a.PresidentId === person.CallingId);
+      let ol = tmpl.querySelector('.assignments-container');
+
+      tmpl.querySelector('.row-header').innerText = `President ${person.Name}`;
+      
+      assignments.forEach(assignment => {
+        const li = document.createElement('li');
+        li.innerText = assignment.Assignment;
+        ol.appendChild(li);
+      })
+      
+      parent.appendChild(tmpl);
+    });
+
+  }
+}
 // end presidency section
+
+async function displayHighCouncil()
+{
+  await loadHighCouncil();
+  await loadWards();
+    
+  let parent = document.getElementById('high-council-container');
+
+  highCouncil.forEach((person) => {
+
+    // get assignments
+    let assignments = highCouncilAssignments.filter(hca => hca.HighCouncilId === person.Id)
+        .map(a => a.Assignment)
+        .reduce((final, current) => {
+          if(final === '') return current
+          return `${final}, ${current}`
+        }, '');
+
+    const homeWard = wards.find(ward => ward.Id === person.HomeWardId);
+    const assignedWard = wards.find(ward => ward.HighCouncilorId === person.Id);
+
+    if(assignedWard) assignments = `${assignedWard.Name}, ${assignments}`
+
+    const tmpl = document.getElementById('high-council-row-template').content.cloneNode(true);
+    tmpl.querySelector('a').innerText = `${person.Seniority}. ${person.Name} (${homeWard.Abbreviation})`;
+    tmpl.querySelector('a').href = person.Profile;
+    tmpl.querySelector('div.high-council-assignments').innerHTML = assignments;
+    
+    parent.appendChild(tmpl);
+  });
+
+}
+
+async function displaySpeakingAssingments()
+{
+  await loadGeneral();
+
+  const instructionsRow = generalInfo.find(info => info.Section === 'Speaking' && info.Key === 'Instructions');
+
+  if(!instructionsRow) return;
+
+  document.getElementById('speaking-instructions-header').innerText = instructionsRow.Key;
+
+  const instructions = instructionsRow.Value.replace(/\r?\n/g, '<br>');
+  document.getElementById('speaking-instructions').innerHTML = instructionsRow.Value;
+
+}
+
+async function displayStakeConference()
+{
+  await loadGeneral();
+
+  const instructionsRow = generalInfo.find(info => info.Section === 'Stake Conference' && info.Key === 'Instructions');
+
+  if(!instructionsRow) return;
+
+  document.getElementById('stake-conference-header').innerText = instructionsRow.Key;
+
+  const instructions = instructionsRow.Value.replace(/\r?\n/g, '<br>');
+  document.getElementById('stake-conference-instructions').innerHTML = instructionsRow.Value;
+
+}
