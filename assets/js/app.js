@@ -86,7 +86,7 @@ async function loadHighCouncil()
   if(highCouncil) return;
 
   let data = await resourceService.getHighCouncil();
-  highCouncil = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data.sort((a,b) => b.Senority - a.Seniority);
+  highCouncil = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
 
   data = await resourceService.getHighCouncilAssignments();
   highCouncilAssignments = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
@@ -232,8 +232,9 @@ async function displayHighCouncil()
   await loadWards();
     
   let parent = document.getElementById('high-council-container');
+  let people = highCouncil.sort((a, b) => a.Seniority - b.Seniority)
 
-  highCouncil.forEach((person) => {
+  people.forEach((person) => {
 
     // get assignments
     let assignments = highCouncilAssignments.filter(hca => hca.HighCouncilId === person.Id)
