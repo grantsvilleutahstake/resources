@@ -1,6 +1,7 @@
 let resourceService;
 
 let generalInfo;
+let tableOfContents;
 let organizations;
 let buildings;
 let wards;
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     resourceService = new ResourceService();
 
     displayGeneralInformation();
+    displayTableOfContents();
     displayBuildings();
     displayPresidency();
     displayHighCouncil();
@@ -26,7 +28,6 @@ function sleep(ms) {
 }
 
 // begin load data
-let isLoadingGeneral = false;
 async function loadGeneral()
 {
 
@@ -44,6 +45,14 @@ async function loadGeneral()
     })
   }
 
+}
+
+async function loadTableOfContents()
+{
+  if(tableOfContents) return;
+
+  let data = await resourceService.getTableOfContents();
+  tableOfContents = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
 }
 
 async function loadOrganizations()
@@ -109,7 +118,23 @@ async function displayGeneralInformation()
 
   const titleRow = generalInfo.find(row => row.Section == 'Header' && row.Key == 'Title')
 
-  document.getElementById('title').innerText = titleRow.Value;
+  document.getElementById('title').innerText = titleRow.Value.replace('<p>','').replace('</p>','');
+}
+
+async function displayTableOfContents()
+{
+  await loadTableOfContents()
+
+  let parent = document.getElementById('toc-container')
+
+  tableOfContents.forEach((row) => {
+    const template = document.getElementById('toc-template').content.cloneNode(true);
+    template.querySelector('a').innerText = row.Title;
+    template.querySelector('a').href = `#${row.Anchor}`;
+    template.querySelector('.section-name').innerText = `Section ${row.Section}`;
+
+    parent.appendChild(template);
+  })
 }
 
 // wards

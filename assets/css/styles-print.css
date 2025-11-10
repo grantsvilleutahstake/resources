@@ -1,0 +1,28 @@
+
+
+@media print {
+
+    img#dp-temple {
+        width: 90vw;
+    }
+
+    img#dp-temple,
+    .card,
+    h1, .h1 {
+        width: 100% !important;
+    }
+
+    .card {
+        break-after: page;
+    }
+    .clickable,
+    .back-link {
+        display: none !important;
+    }
+
+    .row,
+    .row-ward
+    {
+        border-bottom: solid 1pt var(--border-color);
+    }
+}
