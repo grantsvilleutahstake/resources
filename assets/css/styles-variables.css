@@ -1,0 +1,16 @@
+:root {
+  --background-header: #eeeeee;
+
+  --border-color: #ccc;
+  --border-radius: 10px;
+  --border-radius-card: 15px;
+
+  --color-header: #555555;
+  --color-link: #990000;
+  --color-link-hover: #ff0000;
+
+  --font-weight-light: 100;
+  --font-weight-regular: 300;
+  --font-weight-bold: 500;
+  --font-weight-extra-bold: 700;
+}

@@ -39,7 +39,7 @@ async function loadGeneral()
     generalInfo = mappedData.map(row => {
       return {
         ...row,
-        Value: row.Value.replace(/\r?\n/g, '<br>')
+        Value: marked.parse(row.Value)
       }
     })
   }
@@ -90,6 +90,15 @@ async function loadHighCouncil()
 
   data = await resourceService.getHighCouncilAssignments();
   highCouncilAssignments = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+}
+
+async function loadStakeConference()
+{
+  if(!stakeConference){
+
+    let data = await resourceService.getStakeConference();
+    stakeConference = Papa.parse(data, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data;
+  }
 }
 // end load data
 
@@ -276,6 +285,7 @@ async function displaySpeakingAssingments()
 
 async function displayStakeConference()
 {
+  //load instructions
   await loadGeneral();
 
   const instructionsRow = generalInfo.find(info => info.Section === 'Stake Conference' && info.Key === 'Instructions');
@@ -286,5 +296,22 @@ async function displayStakeConference()
 
   const instructions = instructionsRow.Value.replace(/\r?\n/g, '<br>');
   document.getElementById('stake-conference-instructions').innerHTML = instructionsRow.Value;
+
+  // load grid
+  await loadStakeConference();
+
+  let parent = document.getElementById('stake-conference-container');
+
+  stakeConference.forEach((row) => {
+
+    const template = document.getElementById('stake-conference-template').content.cloneNode(true);
+    template.querySelector('.stake-conference-header').innerText = row.Date;
+    template.querySelector('.presiding-authority').innerText = row.Authority;
+    template.querySelector('.shelley-lane').innerText = row.ShelleyLane;
+    template.querySelector('.church-street').innerText = row.ChurchStreet;
+    template.querySelector('.durfee').innerText = row.Chairs;
+    
+    parent.appendChild(template);
+  });
 
 }
