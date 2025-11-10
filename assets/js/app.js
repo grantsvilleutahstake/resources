@@ -211,7 +211,7 @@ async function displayPresidency()
 
     div = document.getElementById('mission-container');
     people = presidency.filter( p => p.OrganizationId == 101);
-    renderPresidencyRows(people, div);
+    renderMissinoaryRows(people, div);
 
     displayPresidencyAssignments()
 
@@ -222,8 +222,19 @@ function renderPresidencyRows(people, parent)
 {
     people.forEach((person) => {
       const tmpl = document.getElementById('presidency-row-template').content.cloneNode(true);
-      tmpl.querySelector('a').innerText = person.Name;
-      tmpl.querySelector('a').href = person.Profile;
+      tmpl.querySelector('.person-name').innerText = person.Name;
+      tmpl.querySelector('.person-name').href = person.Profile;
+      tmpl.querySelector('div.calling-container').innerHTML = person.Calling;
+      
+      parent.appendChild(tmpl);
+    });
+}
+
+function renderMissinoaryRows(people, parent)
+{
+    people.forEach((person) => {
+      const tmpl = document.getElementById('missionary-row-template').content.cloneNode(true);
+      tmpl.querySelector('.person-name').innerText = person.Name;
       tmpl.querySelector('div.calling-container').innerHTML = person.Calling;
       
       parent.appendChild(tmpl);
