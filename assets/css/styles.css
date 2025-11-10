@@ -230,7 +230,11 @@ img#dp-temple {
     img#dp-temple,
     .card,
     h1, .h1  {
-        width: 98vw !important;
+        width: 95vw !important;
+    }
+
+    .table {
+        width: 95%;
     }
 
 
