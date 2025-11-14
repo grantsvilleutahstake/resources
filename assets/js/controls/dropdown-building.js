@@ -1,0 +1,44 @@
+let buildingDropdown
+
+document.addEventListener('DOMContentLoaded', async () => {
+    buildingDropdown = new BuildingDropdown()
+})
+
+class BuildingDropdown {
+
+    selectedBuildingId = 0
+    selectionChangedListener = new EventListener(this)
+
+    constructor() {
+        this.loadBuildings()
+    }
+
+    loadBuildings = async () => {
+        try {
+            const buildings = await service.getBuildings();
+
+            const buildingSelect = document.getElementById('building-select')
+            if (buildingSelect) {
+                buildingSelect.addEventListener('input', (e) => {
+                    this.selectedBuildingId = +e.target.value;
+                    this.selectionChangedListener.raise(this.selectedBuildingId)
+                })
+
+                buildings.forEach(building => {
+                    const option = document.createElement("option");
+                    option.value = building.BuildingId;
+                    option.textContent = building.Name;
+                    buildingSelect.appendChild(option);
+                })
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    onSelectionChanged = (callback) => {
+        this.selectionChangedListener.subscribe(callback)
+    }
+}
