@@ -1,0 +1,52 @@
+.row-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+
+    width: 100%;
+    gap: 5px;
+}
+
+.row-input > label {
+    width: 25%;
+    text-align: right;
+}
+.row-input > input,
+.row-input > select {
+    width: 25%;
+    border: solid 1px #777;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+select {
+  appearance: none;        /* Modern browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: url('/assets/images/dropdown-arrow.svg'); /* Your custom arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 15px 15px;   /* width height */
+  padding-right: 30px; /* Space so text doesn't overlap arrow */
+}
+
+
+@media screen and (max-width: 800px) {
+
+    .row-input {
+        flex-direction: column;
+    }
+
+    .row-input > label {
+        text-align: unset;
+        width: 95%;
+        font-size: .6rem;
+    }
+
+    .row-input > input,
+    .row-input > select {
+        width: 95%;
+    }
+}

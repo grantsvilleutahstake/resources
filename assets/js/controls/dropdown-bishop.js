@@ -28,7 +28,7 @@ class BishopDropdown {
                 wards.forEach(ward => {
                     const option = document.createElement("option");
                     option.value = ward.Id;
-                    option.textContent = `(${ward.Name}) ${ward.Bishop}`;
+                    option.textContent = `(${ward.Abbreviation}) ${ward.Bishop}`;
                     bishopsFilter.appendChild(option);
                 })
             }

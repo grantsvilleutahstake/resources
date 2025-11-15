@@ -98,6 +98,14 @@ class WardsFilter {
             tmpl.querySelector('#high-councilor-link').href = hc.Profile;
             tmpl.querySelector('.youth-night').innerText = ward.YouthNight;
 
+            tmpl.querySelector('.cell-ward-name').innerText = ward.Name;
+            tmpl.querySelector('.cell-start-time').innerText = ward.SacramentMeeting;
+            tmpl.querySelector('#cell-bishop-link').innerText = ward.Bishop;
+            tmpl.querySelector('#cell-bishop-link').href = ward.BishopProfile;
+            tmpl.querySelector('#cell-high-councilor-link').innerText = hc.Name;
+            tmpl.querySelector('#cell-high-councilor-link').href = hc.Profile;
+            tmpl.querySelector('.cell-youth-night').innerText = ward.YouthNight;
+
             parent.appendChild(tmpl);
         })
 

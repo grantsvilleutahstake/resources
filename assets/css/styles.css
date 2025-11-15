@@ -11,10 +11,9 @@ body {
     font-style: normal;
     padding: 0;
     margin: 0;
-
 }
 
-main{
+main {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,11 +21,8 @@ main{
     margin: 10px;
 }
 
-p {
-    /* margin: 0; */
-}
-
-h1, .h1 {
+h1,
+.h1 {
     margin: 20px 0 10px 0;
     padding: 10px 0;
     font-weight: 700;
@@ -35,20 +31,54 @@ h1, .h1 {
     width: 50vw;
 }
 
-h4, .h4 {
+h4,
+.h4 {
     margin: 0;
     padding: 0;
     font-weight: 300;
     font-size: .9rem;
 }
 
-a, 
+a,
 a:visited {
     color: #990000;
 }
 
 a:hover {
     color: red;
+}
+
+#header .h1 {
+    padding: 10px 0;
+    border-top: solid 2px var(--border-color);
+    border-bottom: solid 2px var(--border-color);
+}
+
+.nav-header {
+    display: flex;
+    align-items: end;
+
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.613), rgba(255,255,255,0.613)),
+        url('/assets/images/deseret-peak-temple.webp');
+    background-size: cover, cover;
+    background-position:
+        center center,   /* for the gradient */
+        center -120px;    /* for the image (X position first, then Y) */
+
+    height: 120px;
+    border-bottom: solid 3px var(--border-color);
+}
+
+
+.nav-header img {
+    height: 100px;
+}
+
+.nav-header h2 {
+    margin: 5px 10px;
+    text-align: center;
+    flex-grow: 1;
 }
 
 .clickable {
@@ -80,16 +110,8 @@ img#dp-temple {
     align-items: center;
 }
 
-.width-90 {
+.content-width-fill {
     width: 90%;
-}
-
-.width-80{ 
-    width: 80%;
-}
-
-.width-70{ 
-    width: 70%;
 }
 
 .table {
@@ -99,31 +121,14 @@ img#dp-temple {
     padding-bottom: 20px;
 }
 
-.table > a {
+.table>a {
     display: block;
     margin-top: 10px;
 }
 
-.row-ward .ward-name {
-    width: 7%;
-    flex-shrink: 0;
-}
-.row-ward .start-time {
-    width: 15%;
-    flex-shrink: 0;
-}
-.row-ward .bishop,
-.row-ward .high-councilor  {
-    width: 25%;
-    flex-shrink: 0;
-}
-.row-ward .youth-night {
-    flex-grow: 1;
-}
 
 .row,
-.row-ward
-{
+.row-ward {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -132,9 +137,29 @@ img#dp-temple {
 }
 
 .row:hover,
-.row-ward:hover
-{
+.row-ward:hover {
     background-color: #eee;
+}
+
+.row-ward .ward-name {
+    display: block;
+    width: 7%;
+    flex-shrink: 0;
+}
+
+.row-ward .start-time {
+    width: 15%;
+    flex-shrink: 0;
+}
+
+.row-ward .bishop,
+.row-ward .high-councilor {
+    width: 25%;
+    flex-shrink: 0;
+}
+
+.row-ward .youth-night {
+    flex-grow: 1;
 }
 
 .row-sub-header {
@@ -143,31 +168,28 @@ img#dp-temple {
     background-color: #fafafa;
 }
 
-.cell-sub-header {
-    display: none;
-}
 
-.row > div,
-.row-header > div,
-.row-ward > div,
+.row>div,
+.row-header>div,
+.row-ward>div,
 .cell {
     padding: 0 5px;
 }
 
-.row > div:first-child,
-.row-header > div:first-child {
+.row>div:first-child,
+.row-header>div:first-child {
     width: 33%;
     flex-shrink: 0;
 }
 
-.row > div:last-child,
-.row-header > div:last-child {
+.row>div:last-child,
+.row-header>div:last-child {
     text-align: right;
     flex-grow: 1;
 }
 
-.row > div.span,
-.row-header > div.span {
+.row>div.span,
+.row-header>div.span {
     width: 100% !important;
     text-align: left !important;
 }
@@ -182,13 +204,66 @@ img#dp-temple {
     background-color: #eee;
 }
 
+/* Cell formats */
+.cell-ward {
+    display: none;
+    margin-bottom: 5px;
+}
+
+.cell-sub-header {
+    display: none;
+}
+
+.ward-sub-header {
+    display: block;
+    font-size: .7rem;
+    font-weight: 500;
+    border-top: solid 1px var(--border-color);
+    padding-top: 2px;
+    margin-top: 10px;
+}
+/* 
+.cell-ward:first-child  .ward-sub-header{
+    border: unset;
+    margin-top: 0;
+} */
+
+.cell-row {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+}
+
+.cell-sub-header {
+    font-size: .6rem;
+    font-weight: 500;
+    padding-top: 6px;
+}
+
+.cell-50 {
+    display: inline-block;
+    width: 100% !important;
+}
+
+.ward-sub-header {
+    background-color: var(--background-sub-header);
+}
+
+.cell-ward .cell-ward-name {
+    display: block;
+    background-color: var(--background-sub-header);
+    font-size: 1.3rem;
+}
+
+
+
 .col {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-.grid-3-col{
+.grid-3-col {
     width: 90%;
     display: grid;
     gap: 10px;
@@ -197,8 +272,7 @@ img#dp-temple {
 
 .card {
     border: solid 1px var(--border-color);
-    border-radius: var(--border-radius-card);
-    margin-top: 30px;
+    /* border-radius: var(--border-radius-card); */
     width: 50vw;
     justify-self: center;
     padding-bottom: 10px;
@@ -210,35 +284,34 @@ img#dp-temple {
     font-weight: 700;
     font-size: 1.5rem;
     color: var(--color-header);
-    border-top-left-radius: var(--border-radius-card);
-    border-top-right-radius: var(--border-radius-card);
+    /* border-top-left-radius: var(--border-radius-card);
+    border-top-right-radius: var(--border-radius-card); */
     border-bottom: solid 1px var(--border-color);
     margin-bottom: 20px;
-}
-
-@media screen and (max-width: 1280px) {
-
-    img#dp-temple,
-    .card,
-    h1, .h1  {
-        width: 90vw !important;
-    }
 }
 
 @media screen and (max-width: 1000px) {
 
     img#dp-temple,
     .card,
-    h1, .h1  {
+    h1,
+    .h1 {
         width: 95vw !important;
     }
+}
 
-    .table {
-        width: 95%;
+@media screen and (max-width: 800px) {
+
+    .row-ward {
+        display: none;
     }
 
-
-    .row, .row-header, .row-ward
+    .cell-ward,
+    .cell-sub-header {
+        display: unset;
+    }
+     
+    .row, .row-header
     {
         display: flex;
         flex-direction: column;
@@ -248,6 +321,7 @@ img#dp-temple {
     .row-header > div:first-child {
         width: unset;
     }
+
     .row > div:last-child,
     .row-header > div:last-child {
         font-weight: 200;
@@ -258,29 +332,19 @@ img#dp-temple {
     .row-sub-header {
         display: none;
     }
+}
 
-    .cell-sub-header {
-        display: block;
-        font-size: .7rem;
-        font-weight: 500;
-        margin-top: 2px;
-        padding-top: 2px;
+
+@media screen and (max-width: 600px) {
+
+
+
+    .table {
+        width: 95%;
     }
 
 
-    .row-ward .ward-name,
-    .row-ward .start-time ,
-    .row-ward .bishop,
-    .row-ward .high-councilor,
-    .row-ward .youth-night {
-        width: 100%;
-        flex-grow: 1;
-    }
-    .row-ward .youth-night {
-        margin-bottom: 5px;
-    }
-
-    .grid-3-col{
+    .grid-3-col {
         grid-template-columns: 1fr;
     }
 }
