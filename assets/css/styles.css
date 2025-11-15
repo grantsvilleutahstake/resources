@@ -39,6 +39,23 @@ h4,
     font-size: .9rem;
 }
 
+/* margins */
+.m-0 {
+    margin: 0;
+}
+.m-1 {
+    margin: 2px;
+}
+.m-2 {
+    margin: 5px;
+}
+.m-3 {
+    margin: 10px;
+}
+.m-4 {
+    margin: 20px;
+}
+
 a,
 a:visited {
     color: #990000;
@@ -302,6 +319,9 @@ img#dp-temple {
 
 @media screen and (max-width: 800px) {
 
+    .nav-header {
+        height: unset;
+    }
     .row-ward {
         display: none;
     }

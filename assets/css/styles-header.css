@@ -1,0 +1,85 @@
+#hamburger-container {
+    display: flex;
+    padding: 5px;
+    border-bottom: solid 1px var(--border-color);
+    background-color: white;
+}
+
+.button {
+    padding: 5px 5px 0 5px;
+    border: solid 1px #bbb;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.button:hover {
+    border-color: #777;
+    background-color: #eee;
+}
+
+.button img {
+    height: 25px;
+}
+
+#nav-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    border-bottom: solid 1px var(--border-color);
+    background-color: white;
+}
+
+#nav-container a,
+.nav-tab {
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+#nav-container a:hover{
+    background-color: var(--background-header);
+}
+
+.nav-tab {
+    font-weight: 500;;
+}
+
+.close-button-container {
+    display: flex;
+    justify-content: end;
+    padding: 5px;
+    border-bottom: solid 1px var(--border-color);
+}
+
+#close-nav-button {
+    display: none;
+}
+
+
+@media screen and (max-width: 800px) {
+
+    #close-nav-button {
+        display: unset;
+    }
+
+    #nav-container {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+
+        flex-direction: column;
+        justify-content: start;
+
+        border: solid 1px var(--border-color);
+
+        width: 90vw;
+        height: 100vh;
+
+        font-size: 1.3rem;
+    }
+
+    #nav-container a,
+    #nav-container .nav-tab {
+        width: 100%;
+        padding: 10px;
+    }
+}

@@ -3,13 +3,6 @@ let service;
 document.addEventListener('DOMContentLoaded', async () => {
     service = new ResourceService();
 
-    // displayGeneralInformation();
-    // displayTableOfContents();
-    // displayBuildings();
-    // displayPresidency();
-    // displayHighCouncil();
-    // displaySpeakingAssingments();
-    // displayStakeConference();
 })
 
 // display
@@ -20,23 +13,6 @@ async function displayGeneralInformation()
   const titleRow = generalInfo.find(row => row.Section == 'Header' && row.Key == 'Title')
 
   document.getElementById('title').innerText = titleRow.Value.replace('<p>','').replace('</p>','');
-}
-
-async function displayTableOfContents()
-{
-  const tableOfContents = await service.getTableOfContents()
-
-  let parent = document.getElementById('toc-container')
-
-  tableOfContents.forEach((row) => {
-    const template = document.getElementById('toc-template').content.cloneNode(true);
-    template.querySelector('a').innerText = row.Title;
-    template.querySelector('a').href = `#${row.Anchor}`;
-    template.querySelector('a').href = `${row.Anchor}.html`;
-    template.querySelector('.section-name').innerText = `Section ${row.Section}`;
-
-    parent.appendChild(template);
-  })
 }
 
 
