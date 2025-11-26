@@ -3,8 +3,11 @@ class ResourceService
    
     baseUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTJ1ibA1o-Sh4vzmHc6pKD0Ss3WfFzIe-qvvSPmG4gca8gLutRYK_dY0EWjsANFgB-pSVm4FOX6RZbH/pub?output=csv&single=true&gid=`
     
-    generalInfoId = 1284108232
-    callingsId = 0
+    urlCallings =     `https://docs.google.com/spreadsheets/d/e/2PACX-1vS9FzTQXNYIj838gubnNXyJvQ086V1nRoRsjzLbSMCAkeRYCCd2IKvYI80KUDDczEOYb8eAH5ifDEBq/pub?output=csv`
+    urlTOC = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQBJuohpXLJgD5yMu2IS4ccSG6nk1b_dq0kLy106mOH9I__N0Nmi0wVERmJF9Ac3tzGjLDLEbM1JnUw/pub?gid=915886203&single=true&output=csv`
+    urlGeneral = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTJ1ibA1o-Sh4vzmHc6pKD0Ss3WfFzIe-qvvSPmG4gca8gLutRYK_dY0EWjsANFgB-pSVm4FOX6RZbH/pub?gid=1284108232&single=true&output=csv`
+    urlWardConferences = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTwk9v50j-ewt02iOjscPOzeyM9H4WC_Jh3-q77nxvjwomTb7PhJQWnweLAmlSEyV3v2xvmp7_o4nv8/pub?gid=0&single=true&output=csv`
+
     presidencyAssignmentsId = 1193891930
     highCouncilId = 1327477659
     highCouncilAssignmentsId = 2000120215
@@ -12,13 +15,11 @@ class ResourceService
     buildingsId = 156666937
     wardsId = 1720792576
     stakeConferenceId = 347409085
-    tableOfContentsId = 915886203
     youthCampsId = 994105212
     bishopPPIsId = 1332917091
 
     isLoading = []
     data = []
-
 
     sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms))
@@ -48,14 +49,31 @@ class ResourceService
         return this.data[id]
     }
 
+    async getDataFromURL(url)
+    {
+        // don't try to load data that is currently being loaded
+        // while(this.isLoading[id]) this.sleep(200)
+
+        if(!this.data[url])
+        {
+            const response = await fetch(url)
+
+            const body = await response.text()
+
+            this.data[url] = Papa.parse(body, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data
+
+        }
+        return this.data[url]
+    }
+
     async getGeneralInformation()
     {
-        return await this.getData(this.generalInfoId)
+        return await this.getDataFromURL(this.urlGeneral)
     }
 
     async getCallings()
     {
-        return await this.getData(this.callingsId)
+        return await this.getDataFromURL(this.urlCallings)
     }
 
     async getPresidencyAssignments()
@@ -83,6 +101,25 @@ class ResourceService
         return await this.getData(this.wardsId)
     }
 
+    async getWardConferences()
+    {
+        let meetings = await this.getDataFromURL(this.urlWardConferences)
+        meetings = meetings.map( meeting => {
+            const newDate = parseDate(meeting.Date)
+            const month = newDate.toLocaleDateString('en-US', { month: 'long' })
+            const day = newDate.getDate()
+
+            return {
+                ...meeting,
+                Date: newDate,
+                Month: month,
+                Day: day
+            }
+        })
+
+        return meetings
+    }
+
     async getOrganizations()
     {
         return await this.getData(this.organizationsId)
@@ -100,7 +137,7 @@ class ResourceService
 
     async getTableOfContents()
     {
-        return await this.getData(this.tableOfContentsId)
+        return await this.getDataFromURL(this.urlTOC)
     }
 
     async getYouthCamps()

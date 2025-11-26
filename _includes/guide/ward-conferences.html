@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/assets/css/styles-ward-conference.css">
+
+{% include controls/dropdown-years.html %}
+{% include controls/dropdown-bishops.html %}
+
+<template id="ward-conference-row-template">
+
+  <div class="row row-ward-conference">
+    <div class="ward-conference-name"></div>
+    <div class="ward-conference-date"></div>
+    <div class="ward-conference-speaker"></div>
+  </div>
+
+</template>
+
+<div id="ward-conference" class="card">
+  <section class="centered card-header m-0" id="ward-conference-header">
+    <span id="year-holder"></span> Ward Conference Schedule
+  </section>
+
+  <section class="centered-column">
+    <div class="row row-ward-conference row-sub-header">
+      <div class="ward-conference-name">ward</div>
+      <div class="ward-conference-date">date</div>
+      <div class="ward-conference-speaker">speaker</div>
+    </div>
+    <div id="ward-conference-table" class="cell"></div>
+</div>
+</section>
+
+
+</div>

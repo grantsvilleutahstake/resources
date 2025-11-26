@@ -1,0 +1,33 @@
+.row-ward-conference {
+    display: flex;
+    width: 100%;
+}
+.row-ward-conference > div {
+    width: 33% !important;
+    padding: 5px;
+    text-align: left !important;
+}
+
+#ward-conference-table {
+    width: 100%;
+}
+
+.ward-conference-name {
+    font-weight: var(--font-weight-bold)
+}
+
+.ward-conference-speaker {
+    font-size: 1rem !important;
+}
+
+
+@media screen and (max-width: 1280px) {
+
+}
+
+@media screen and (max-width: 800px) {
+    #ward-conference-table {
+        width: 70% !important;
+        padding: 20px !important;
+    }
+}

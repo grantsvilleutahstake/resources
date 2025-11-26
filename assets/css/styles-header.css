@@ -44,10 +44,7 @@
 }
 
 .close-button-container {
-    display: flex;
-    justify-content: end;
-    padding: 5px;
-    border-bottom: solid 1px var(--border-color);
+    display: none;
 }
 
 #close-nav-button {
@@ -56,6 +53,13 @@
 
 
 @media screen and (max-width: 800px) {
+
+    .close-button-container {
+        display: flex;
+        justify-content: end;
+        padding: 5px;
+        border-bottom: solid 1px var(--border-color);
+    }
 
     #close-nav-button {
         display: unset;

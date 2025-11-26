@@ -11,10 +11,6 @@ class EventListener {
         if(!this.callbacks.includes(callback))
         {
             this.callbacks.push(callback)
-
-            console.log('callback added')
-            console.log(this.callbacks.length)
-            console.log(callback)
         }
     }
 

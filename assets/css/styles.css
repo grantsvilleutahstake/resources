@@ -41,7 +41,7 @@ h4,
 
 /* margins */
 .m-0 {
-    margin: 0;
+    margin: 0 !important;
 }
 .m-1 {
     margin: 2px;
