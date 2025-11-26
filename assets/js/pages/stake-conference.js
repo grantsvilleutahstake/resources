@@ -13,7 +13,7 @@ async function displayStakeConference()
 
   if(!row) return;
 
-  document.getElementById('stake-conference-header').innerText = row.Key;
+  document.getElementById('stake-conference-header').innerText = row.Header;
 
   document.getElementById('stake-conference-instructions').innerHTML = marked.parse(row.Value);
 

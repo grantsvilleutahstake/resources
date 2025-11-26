@@ -1,8 +1,8 @@
-let bishopDropdown
+// let bishopDropdown
 
-document.addEventListener('DOMContentLoaded', async () => {
-    bishopDropdown = new BishopDropdown()
-})
+// document.addEventListener('DOMContentLoaded', async () => {
+//     bishopDropdown = new BishopDropdown()
+// })
 
 class BishopDropdown {
 
@@ -15,13 +15,16 @@ class BishopDropdown {
 
     loadBishops = async () => {
         try {
+            const currentYear = new Date().getFullYear()
+
             let wards = await service.getWards();
-            wards = wards.sort((a, b) => a.Id - b.Id);
+            wards = wards.filter(ward => ward.Year == currentYear)
+                         .sort((a, b) => a.SortOrder - b.SortOrder);
 
             const bishopsFilter = document.getElementById('bishop-select')
             if (bishopsFilter) {
                 bishopsFilter.addEventListener('input', (e) => {
-                    this.selectedBishopId = +e.target.value
+                    this.selectedBishopId = e.target.value
                     this.selectionChangedListener.raise(this.selectedBishopId)
                 })
 

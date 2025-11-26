@@ -1,9 +1,3 @@
-let buildingDropdown
-
-document.addEventListener('DOMContentLoaded', async () => {
-    buildingDropdown = new BuildingDropdown()
-})
-
 class BuildingDropdown {
 
     selectedBuildingId = 0

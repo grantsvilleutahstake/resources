@@ -5,16 +5,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 })
 
-// display
-async function displayGeneralInformation()
-{
-  const generalInfo = await service.getGeneralInformation();
-
-  const titleRow = generalInfo.find(row => row.Section == 'Header' && row.Key == 'Title')
-
-  document.getElementById('title').innerText = titleRow.Value.replace('<p>','').replace('</p>','');
-}
-
 
 
 

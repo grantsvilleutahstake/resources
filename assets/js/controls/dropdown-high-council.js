@@ -1,9 +1,3 @@
-let highCouncilDropdown
-
-document.addEventListener('DOMContentLoaded', async () => {
-    highCouncilDropdown = new HighCouncilDropdown()
-})
-
 class HighCouncilDropdown {
 
     selectedHighCouncilorId = 0

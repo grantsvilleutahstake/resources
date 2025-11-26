@@ -2,20 +2,20 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    displaySpeakingAssingments();
+    displaySpeakingAssingments()
 
 })
 
 async function displaySpeakingAssingments()
 {
-  const generalInfo = await service.getGeneralInformation();
+  const generalInfo = await service.getGeneralInformation()
 
-  const row = generalInfo.find(info => info.Section === 'Speaking' && info.Key === 'Instructions');
+  const row = generalInfo.find(info => info.Section === 'Speaking' && info.Key === 'Instructions')
 
-  if(!row) return;
+  if(!row) return
 
-  document.getElementById('speaking-instructions-header').innerText = row.Key;
+  document.getElementById('speaking-instructions-header').innerText = row.Header
 
-  document.getElementById('speaking-instructions').innerHTML = marked.parse(row.Value);
+  document.getElementById('speaking-instructions').innerHTML = marked.parse(row.Value)
 
 }
