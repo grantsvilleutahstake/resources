@@ -1,0 +1,36 @@
+.markdown-container {
+    margin-top: 20px;
+}
+
+.markdown-container h1,
+.markdown-container h2,
+.markdown-container h3,
+.markdown-container h4,
+.markdown-container p {
+    width: 90% !important;
+    text-align: left !important;
+    margin: 5px 0;
+}
+
+.markdown-container table {
+    border-collapse: collapse;
+    width: 90%;
+    border: var(--border-standard);
+    margin: 0;
+}
+
+
+.markdown-container tr {
+    margin: 0;
+}
+
+.markdown-container th {
+    margin: 0;
+    padding: 5px;
+    background-color: var(--background-header);
+}
+
+.markdown-container td {
+    margin: 0;
+    padding: 5px;
+}
