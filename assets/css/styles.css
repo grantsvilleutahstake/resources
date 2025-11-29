@@ -57,11 +57,15 @@ h4,
 }
 
 a,
-a:visited {
+a:visited,
+.link {
     color: #990000;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
-a:hover {
+a:hover,
+.link:hover {
     color: red;
 }
 
@@ -299,7 +303,7 @@ img#dp-temple {
 .card {
     border: solid 1px var(--border-color);
     /* border-radius: var(--border-radius-card); */
-    width: 50vw;
+    width: 90vw; 
     justify-self: center;
     padding-bottom: 10px;
 }
@@ -323,16 +327,17 @@ img#dp-temple {
 
 @media screen and (max-width: 1000px) {
 
+}
+
+@media screen and (max-width: 800px) {
+
     img#dp-temple,
     .card,
     h1,
     .h1 {
         width: 95vw !important;
     }
-}
-
-@media screen and (max-width: 800px) {
-
+    
     .nav-header {
         height: unset;
     }

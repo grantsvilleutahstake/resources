@@ -1,0 +1,91 @@
+.speaking-card {
+    width: 100%;
+    border: var(--border-standard);
+    margin: 0 0 15px 0;
+    padding: 0;
+}
+
+.speaking-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;;
+    width: 100%;
+    padding-top: 5px;
+    background-color: var(--background-header);
+    border-bottom: var(--border-standard);
+}
+
+.speaking-sub-header  {
+    font-weight: var(--font-weight-bold);
+    /* font-size: .9rem; */
+}
+
+.speaking-filters {
+    margin: 20px 0 10px 0;
+}
+
+#speaking-wards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    row-gap: 10px;;
+    padding: 10px !important;
+}
+
+#speaking-wards .speaking-sub-header {
+    /* font-size: .9rem; */
+    border-bottom: var(--border-standard);
+}
+
+.ward-assignment-cell {
+    border: var(--border-standard);
+}
+
+.ward-assignment-cell > div {
+    padding: 3px;
+}
+
+#ward-name {
+    background-color: var(--background-sub-header);
+    border-bottom: var(--border-standard);
+    font-weight: var(--font-weight-bold);
+}
+
+.topic-header {
+    font-size: .7rem;
+}
+
+#topic-name{
+    font-weight: var(--font-weight-bold);
+}
+
+#topic-resources {
+    font-size: .8rem;
+}
+
+
+
+@media screen and (max-width: 1200px) {
+
+    #speaking-wards {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+   
+}
+
+
+@media screen and (max-width: 900px) {
+
+    #speaking-wards {
+        grid-template-columns: 1fr 1fr;
+    }
+   
+}
+
+
+@media screen and (max-width: 700px) {
+
+    #speaking-wards {
+        grid-template-columns: 1fr;
+    }
+   
+}

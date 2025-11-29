@@ -54,7 +54,7 @@ class ResourceGuideHeader {
     const page = window.location.pathname.split('/')
                                          .pop()
                                          .split('.')[0]
-    console.log(page)
+    
     this.currentPage = page
   }
 

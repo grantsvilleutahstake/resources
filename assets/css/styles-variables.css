@@ -1,7 +1,9 @@
 :root {
   --background-header: #eeeeee;
-  --background-sub-header: #f8f2ec;
+  /* --background-sub-header: #f8f2ec; */
+  --background-sub-header: #f3f3f3;
 
+  --border-standard: solid 1px #ccc;
   --border-color: #ccc;
   --border-radius: 10px;
   --border-radius-card: 15px;
