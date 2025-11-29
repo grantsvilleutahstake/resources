@@ -14,6 +14,8 @@ class ResourceService
     urlSpeakingAssignments = `https://docs.google.com/spreadsheets/d/e/2PACX-1vShLSfq9v59X45wZjG1uJ4oCvGCw0wBONGY-f1w9R9jxHOkYZGnYIGgeAwsEahwIPI3FGkEFDDSXndn/pub?gid=1229035460&single=true&output=csv`
     urlYouthCamps = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTQ12RQSZuUViBmPcJ4gn1ho9fJ-13mFXAhjhuMWHa79sjEwvI0tCZEHd5QjKtLlDUCfYP5MixopAwL/pub?gid=994105212&single=true&output=csv`
 
+    urlEldersPPIs = `https://docs.google.com/spreadsheets/d/e/2PACX-1vR0cNQQjHoQH4-NiQKII-Erth3qhmINb4pHHJ5ZXis4I-bnJQcHYBKaJFIRi0ODD_IoU4bWbgSjRRlk/pub?gid=101714891&single=true&output=csv`
+
     presidencyAssignmentsId = 1193891930
     highCouncilId = 1327477659
     highCouncilAssignmentsId = 2000120215
@@ -137,6 +139,11 @@ class ResourceService
     async getBishopPPIs()
     {
         return await this.getData(this.bishopPPIsId)
+    }
+
+    async getEldersPPIs()
+    {
+        return await this.getDataFromURL(this.urlEldersPPIs)
     }
 
     async getTableOfContents()

@@ -325,6 +325,11 @@ img#dp-temple {
     flex-direction: row;
 }
 
+
+.filters-container {
+    margin: 20px 0 10px 0;
+}
+
 @media screen and (max-width: 1000px) {
 
 }

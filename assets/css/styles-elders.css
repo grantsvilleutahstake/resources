@@ -1,0 +1,54 @@
+
+.row-ppi {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: dotted 1px var(--border-color);
+    padding-top: 5px;
+}
+
+.row-ppi-time {
+    width: 20% !important;
+}
+
+.row-ppi-ward{
+    width: 20% !important;
+}
+
+.row-ppi-quarter {
+    width: 15% !important;
+    text-align: left !important;
+}
+
+.cell-ppi-ward,
+.cell-ppi-time,
+.row-ppi-ward,
+.row-ppi-time {
+    font-weight: 700;
+}
+
+#elders-ppi-table .cell-row {
+    grid-template-columns: 1fr !important;
+
+    border: var(--border-standard);
+    margin: 5px 0;
+}
+#elders-ppi-table .cell-row > div {
+    padding: 5px;
+}
+
+
+@media screen and (max-width: 800px) {
+    .row-ppi {
+        display: none;
+    }
+
+    .header {
+        background-color: var(--background-sub-header);
+    }
+
+    .cell-sub-header {
+        font-size: .9rem !important;
+        padding: 0 10px 0 0 !important;
+    }
+}

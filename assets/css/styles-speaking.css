@@ -19,10 +19,6 @@
     /* font-size: .9rem; */
 }
 
-.speaking-filters {
-    margin: 20px 0 10px 0;
-}
-
 #speaking-wards {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
