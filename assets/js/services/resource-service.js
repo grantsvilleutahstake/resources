@@ -1,12 +1,11 @@
-class ResourceService
-{
-   
+class ResourceService {
+
     baseUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTJ1ibA1o-Sh4vzmHc6pKD0Ss3WfFzIe-qvvSPmG4gca8gLutRYK_dY0EWjsANFgB-pSVm4FOX6RZbH/pub?output=csv&single=true&gid=`
-    
-    urlCallings =     `https://docs.google.com/spreadsheets/d/e/2PACX-1vS9FzTQXNYIj838gubnNXyJvQ086V1nRoRsjzLbSMCAkeRYCCd2IKvYI80KUDDczEOYb8eAH5ifDEBq/pub?output=csv`
+
+    urlCallings = `https://docs.google.com/spreadsheets/d/e/2PACX-1vS9FzTQXNYIj838gubnNXyJvQ086V1nRoRsjzLbSMCAkeRYCCd2IKvYI80KUDDczEOYb8eAH5ifDEBq/pub?output=csv`
     urlTOC = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQBJuohpXLJgD5yMu2IS4ccSG6nk1b_dq0kLy106mOH9I__N0Nmi0wVERmJF9Ac3tzGjLDLEbM1JnUw/pub?gid=915886203&single=true&output=csv`
     urlGeneral = `https://docs.google.com/spreadsheets/d/e/2PACX-1vS-KODJLl_MYEIJ-rhpqnazV8Zp2088nmfcp-AMo6ulWwWitLgAigO_rgRi0FKtPQuaEr-m7Aakkkeq/pub?gid=1476742322&single=true&output=csv`
-    
+
     //urlGeneral = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTJ1ibA1o-Sh4vzmHc6pKD0Ss3WfFzIe-qvvSPmG4gca8gLutRYK_dY0EWjsANFgB-pSVm4FOX6RZbH/pub?gid=1284108232&single=true&output=csv`
     urlWardConferences = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTwk9v50j-ewt02iOjscPOzeyM9H4WC_Jh3-q77nxvjwomTb7PhJQWnweLAmlSEyV3v2xvmp7_o4nv8/pub?gid=0&single=true&output=csv`
     urlOrganizations = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRXoswdY80384PRJHEuCjrzJ0pUfSUymWvauESxl_6S-ziA318w_2AvKb3UG33xNiBhNUXRWYD-OfaL/pub?gid=1589061574&single=true&output=csv`
@@ -24,93 +23,114 @@ class ResourceService
     stakeConferenceId = 347409085
     bishopPPIsId = 1332917091
 
-    isLoading = []
-    data = []
+    data = {}
 
-    sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms))
+    constructor() {
+        this.loadFromLocal()
     }
 
-    
-    async getData(id)
-    {
-        // don't try to load data that is currently being loaded
-        // while(this.isLoading[id]) this.sleep(200)
+    saveToLocal = (data) => {
+        const days = 30
+        const hours = 24
+        const minutes = 60
+        const seconds = 60
+        const miliseconds = 1000
 
-        if(!this.data[id])
-        {
-            // mark that endpoint is being loaded
-            // this.isLoading[id] = true
+        const newTime = Date.now() + (days * hours * minutes * seconds * miliseconds)
+
+        const body = {
+            newTime: newTime,
+            data: data
+        }
+
+        localStorage.setItem('resource-guide', JSON.stringify(body))
+
+    }
+
+    loadFromLocal = async () => {
+
+        try {
+            const body = JSON.parse(localStorage.getItem('resource-guide'))
+            const currentTime = Date.now()
+
+            if(body.newTime < currentTime) {
+                localStorage.removeItem('resource-guide')
+            } 
+            else {
+                this.data = body.data
+            }
+        } catch(e) {
+            console.log(e)            
+        }
+
+    }
+
+
+    getData = async (id) => {
+
+        if(!this.data.hasOwnProperty(id)) {
 
             const url = `${this.baseUrl}${id}`
             const response = await fetch(url)
 
             const body = await response.text()
 
-            this.data[id] = Papa.parse(body, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data
+            const data = Papa.parse(body, { header: true, skipEmptyLines: true, dynamicTyping: true }).data
 
-            // loading is done
-            // this.isLoading = this.isLoading.filter(value => value !== id)
+            this.data[id] = data;
+            //cache the loaded data to localStorage
+            this.saveToLocal(this.data)
         }
         return this.data[id]
     }
 
-    async getDataFromURL(url)
-    {
-        // don't try to load data that is currently being loaded
-        // while(this.isLoading[id]) this.sleep(200)
+    getDataFromURL = async (url) => {
 
-        if(!this.data[url])
-        {
+        if(!this.data.hasOwnProperty(url)) {
             const response = await fetch(url)
 
             const body = await response.text()
 
-            this.data[url] = Papa.parse(body, { header: true,  skipEmptyLines: true, dynamicTyping: true }).data
-
+            const data = Papa.parse(body, { header: true, skipEmptyLines: true, dynamicTyping: true }).data
+            
+            this.data[url] = data;
+            //cache the loaded data to localStorage
+            this.saveToLocal(this.data)
         }
         return this.data[url]
     }
 
-    async getGeneralInformation()
-    {
+    getGeneralInformation = async () => {
         return await this.getDataFromURL(this.urlGeneral)
     }
 
-    async getCallings()
-    {
+    getCallings = async () => {
         return await this.getDataFromURL(this.urlCallings)
     }
 
-    async getPresidencyAssignments()
-    {
+    getPresidencyAssignments = async () => {
         return await this.getData(this.presidencyAssignmentsId)
     }
 
-    async getHighCouncil()
-    {
+    getHighCouncil = async () => {
         return await this.getData(this.highCouncilId)
     }
 
-    async getHighCouncilAssignments()
-    {
+    getHighCouncilAssignments = async () => {
         return await this.getData(this.highCouncilAssignmentsId)
     }
 
-    async getBuildings()
-    {
+    getBuildings = async () => {
         return await this.getData(this.buildingsId)
     }
 
-    async getWards()
-    {
+    getWards = async () => {
         return await this.getData(this.wardsId)
     }
 
-    async getWardConferences()
-    {
+    getWardConferences = async () => {
         let meetings = await this.getDataFromURL(this.urlWardConferences)
-        meetings = meetings.map( meeting => {
+        meetings = meetings.map(meeting => {
             const newDate = parseDate(meeting.Date)
             const month = newDate.toLocaleDateString('en-US', { month: 'long' })
             const day = newDate.getDate()
@@ -126,43 +146,35 @@ class ResourceService
         return meetings
     }
 
-    async getOrganizations()
-    {
+    getOrganizations = async () => {
         return await this.getDataFromURL(this.urlOrganizations)
     }
 
-    async getStakeConference()
-    {
+    getStakeConference = async () => {
         return await this.getData(this.stakeConferenceId)
     }
 
-    async getBishopPPIs()
-    {
+    getBishopPPIs = async () => {
         return await this.getData(this.bishopPPIsId)
     }
 
-    async getEldersPPIs()
-    {
+    getEldersPPIs = async () => {
         return await this.getDataFromURL(this.urlEldersPPIs)
     }
 
-    async getTableOfContents()
-    {
+    getTableOfContents = async () => {
         return await this.getDataFromURL(this.urlTOC)
     }
 
-    async getSpeakingTopics()
-    {
+    getSpeakingTopics = async () => {
         return await this.getDataFromURL(this.urlSpeakingTopics)
     }
 
-    async getSpeakingAssignments()
-    {
+    getSpeakingAssignments = async () => {
         return await this.getDataFromURL(this.urlSpeakingAssignments)
     }
 
-    async getYouthCamps()
-    {
+    getYouthCamps = async () => {
         return await this.getData(this.urlYouthCamps)
     }
 
