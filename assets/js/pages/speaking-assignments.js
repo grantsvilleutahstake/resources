@@ -93,16 +93,6 @@ class SpeakingAssignments {
     }
   }
 
-  toggleInstructionVisibility = () => {
-    const section = document.getElementById('speaking-instructions-container')
-    const hide = document.getElementById('hide-speaking-details')
-    const show = document.getElementById('show-speaking-details')
-
-    toggle(section)
-    toggle(hide)
-    toggle(show)
-  }
-
   displayAssignments = () => {
     const selectedYear = yearDropdown.selectedYear
     const selectedMonth = monthDropdown.selectedMonth

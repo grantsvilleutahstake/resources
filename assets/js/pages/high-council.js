@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function displayHighCouncil()
 {
-  const highCouncil = await service.getHighCouncil();
+  let highCouncil = await service.getHighCouncil();
+  // highCouncil = highCouncil.filter(person => person.OrganizationId == 2)
+
   const highCouncilAssignments = await service.getHighCouncilAssignments();
   const wards = await service.getWards();
     
@@ -18,7 +20,7 @@ async function displayHighCouncil()
   people.forEach((person) => {
 
     // get assignments
-    let assignments = highCouncilAssignments.filter(hca => hca.HighCouncilId === person.Id)
+    let assignments = highCouncilAssignments.filter(hca => hca.HighCouncilId === person.CallingId)
         .map(a => a.Assignment)
         .reduce((final, current) => {
           if(final === '') return current

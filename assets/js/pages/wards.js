@@ -115,7 +115,7 @@ class WardsFilter {
         buildingWards.forEach(ward => {
 
             const tmpl = document.getElementById('ward-row-template').content.cloneNode(true)
-            const hc = highCouncil.find(hc => hc.Id === ward.HighCouncilorId)
+            const hc = highCouncil.find(hc => hc.CallingId === ward.HighCouncilorId)
 
             if(ward.IsAgentBishop && agentBishopLink) {
                 agentBishopLink.innerText = ward.Bishop
