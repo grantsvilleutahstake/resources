@@ -16,10 +16,14 @@ class WardConferencePage {
   selectedWardId = 'All'
   selectedYear = 0
 
+  constructor()
+  {
+    this.init()
+  }
 
-  constructor() {
+  init = async () => {
 
-      this.selectedYear = new Date().getFullYear()
+      this.selectedYear = getCurrentYear()
       this.displayYear()
       this.displayWardConferences()
 

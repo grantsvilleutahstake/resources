@@ -1,4 +1,5 @@
 let service;
+let currentYear
 
 document.addEventListener('DOMContentLoaded', async () => {
     service = new ResourceService();

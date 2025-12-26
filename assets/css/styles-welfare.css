@@ -1,0 +1,29 @@
+.service-date {
+    width: 10% !important;
+    flex-shrink: 0 !important;
+}
+
+.service-day {
+    width: 10% !important;
+    flex-shrink: 0 !important;
+}
+
+.service-assignment {
+    width: 50% !important;
+    flex-shrink: 0 !important;
+}
+
+.service-start {
+    width: 10% !important;
+    flex-shrink: 0 !important;
+}
+
+.service-end {
+    width: 10% !important;
+    flex-shrink: 0 !important;
+}
+
+.service-volunteers {
+    width: 10% !important;
+    flex-shrink: 0 !important;
+}

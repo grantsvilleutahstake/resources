@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 class SpeakingAssignments {
 
+  selectedYear
   generalInfo
   topics
   assignments
@@ -31,16 +32,16 @@ class SpeakingAssignments {
     const hide = document.getElementById('hide-speaking-details')
     const show = document.getElementById('show-speaking-details')
 
-    hide.addEventListener('click', this.toggleInstructionVisibility)
-    show.addEventListener('click', this.toggleInstructionVisibility)
   }
 
   init = async () => {
+    this.selectedYear = getCurrentYear()
     this.generalInfo = await service.getGeneralInformation()
     this.topics = await service.getSpeakingTopics()
     this.assignments = await service.getSpeakingAssignments()
     this.callings = await service.getCallings()
     this.wards = await service.getWards()
+    console.table(this.wards)
 
     yearDropdown.onSelectionChanged(this.selectedYearChanged)
     monthDropdown.onSelectionChanged(this.selectedMonthChanged)
@@ -136,14 +137,17 @@ class SpeakingAssignments {
 
   displayWardAssignments = (month, parent) => {
     const assignments = this.currentAssignments.filter(assignment => assignment.Month == month)
+    const wards = this.wards.filter(ward => ward.Year == this.selectedYear)
 
     assignments.forEach(assignment => {
 
       const auxilliary = this.callings.find(calling => calling.SpeakerId == assignment.AuxilliaryId)
       const highCouncilor = this.callings.find(calling => calling.SpeakerId == assignment.HighCouncilId)
+      const ward = wards.find(ward => ward.Id == assignment.WardId)
 
       const template = document.getElementById('ward-assignment-template').content.cloneNode(true)
       template.getElementById('ward-name').innerText = assignment.WardId
+      template.getElementById('ward-time').innerText = ward.SacramentMeeting
       template.getElementById('auxilliary-name').innerText = `${auxilliary.Name} (${auxilliary.SpeakingAbbreviation})`
       template.getElementById('high-council-name').innerText = `${highCouncilor.Name} (${highCouncilor.SpeakingAbbreviation})`
 

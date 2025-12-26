@@ -1,17 +1,20 @@
 
 class YearDropdown {
 
-    selectedYear = new Date().getFullYear()
+    selectedYear
     selectionChangedListener = new EventListener(this)
 
     constructor() {
         this.loadYears()
     }
 
+
     loadYears = async () => {
         try {
+            this.selectedYear = getCurrentYear()
+
             let years = (await service.getWards())
-                            .map(ward => ward.Year)
+                            .map(ward => ward.Year + '')
 
             years.push(this.selectedYear)
             years = [...new Set(years)].sort((a, b) => a - b)
@@ -21,6 +24,7 @@ class YearDropdown {
                 yearFilter.addEventListener('input', (e) => {
                     this.selectedYear = +e.target.value
                     this.selectionChangedListener.raise(this.selectedYear)
+                    setCurrentYear(this.selectedYear)
                 })
 
                 years.forEach(year => {

@@ -4,7 +4,8 @@ let buildingDropdown
 let highCouncilDropdown
 let yearDropdown
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async () =>
+{
 
     await service.getBuildings()
     await service.getBuildings()
@@ -17,15 +18,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 })
 
-class WardsFilter {
+class WardsFilter
+{
 
     selectedWardId = 'All'
     selectedHighCouncilId = 0
     selectedBuildingId = 0
     selectedYear = 0
 
-    constructor() {
-        this.selectedYear = new Date().getFullYear()
+    constructor()
+    {
+        this.init()
+    }
+
+    init = async () =>
+    {
+        this.selectedYear = await getCurrentYear()
         this.displayYear()
         this.displayBuildings()
 
@@ -35,37 +43,45 @@ class WardsFilter {
         highCouncilDropdown.onSelectionChanged(this.selectedHighCouncilorChanged)
     }
 
-    selectedYearChanged = (year) => {        
+    selectedYearChanged = (year) =>
+    {
         this.selectedYear = year
         this.displayYear()
         this.displayBuildings()
     }
 
-    selectedBuildingChanged = (buildingId) => {        
+    selectedBuildingChanged = (buildingId) =>
+    {
         this.selectedBuildingId = buildingId
         this.displayBuildings()
     }
 
-    selectedBishopChanged = (wardId) => {
+    selectedBishopChanged = (wardId) =>
+    {
         this.selectedWardId = wardId
         this.displayBuildings()
     }
 
-    selectedHighCouncilorChanged = (highCouncilorId) => {
+    selectedHighCouncilorChanged = (highCouncilorId) =>
+    {
         this.selectedHighCouncilId = highCouncilorId
         this.displayBuildings()
     }
 
-    displayYear = () => {
+    displayYear = () =>
+    {
         document.getElementById('year-holder').innerHTML = `${this.selectedYear} &nbsp`
     }
 
-    displayBuildings = async () => {
+    displayBuildings = async () =>
+    {
         if (!service) return
 
         let buildings = await service.getBuildings()
-        if (this.selectedBuildingId > 0) {
-            buildings = buildings.filter(building => {
+        if (this.selectedBuildingId > 0)
+        {
+            buildings = buildings.filter(building =>
+            {
                 return building.BuildingId == this.selectedBuildingId
             })
         }
@@ -73,8 +89,10 @@ class WardsFilter {
         let parent = document.getElementById('buildings-container')
         parent.innerText = ''
 
-        if ('content' in document.createElement('template')) {
-            buildings.forEach(async (building) => {
+        if ('content' in document.createElement('template'))
+        {
+            buildings.forEach(async (building) =>
+            {
                 const template = document.getElementById('building-row-template').content.cloneNode(true)
                 const div = template.querySelector(".building-table")
                 const agentBishopLink = template.querySelector(".agent-bishop")
@@ -86,38 +104,43 @@ class WardsFilter {
                 const mapToggle = template.querySelector('.clickable')
                 const map = template.querySelector('.map-container')
 
-                mapToggle.addEventListener('click', () => {
+                mapToggle.addEventListener('click', () =>
+                {
                     toggle(map)
                 })
 
                 const hasWards = await this.displayWards(building.BuildingId, div, agentBishopLink)
 
-                if(hasWards) parent.appendChild(template)
+                if (hasWards) parent.appendChild(template)
             })
         }
     }
 
-    displayWards = async (buildingId, parent, agentBishopLink) => {
+    displayWards = async (buildingId, parent, agentBishopLink) =>
+    {
         const highCouncil = await service.getHighCouncil()
         const wards = (await service.getWards())
-                            .sort((a,b) => a.TimeSlot - b.TimeSlot)
+            .sort((a, b) => a.TimeSlot - b.TimeSlot)
 
-        const buildingWards = wards.filter(ward => {
+        const buildingWards = wards.filter(ward =>
+        {
             // return immediately on each check if invalid
-            if(ward.Year != this.selectedYear) return false
-            if(ward.BuildingId != buildingId) return false
-            if(ward.Id != this.selectedWardId && this.selectedWardId != 'All') return false
-            if(ward.HighCouncilorId != this.selectedHighCouncilId && this.selectedHighCouncilId != 0) return false
+            if (ward.Year != this.selectedYear) return false
+            if (ward.BuildingId != buildingId) return false
+            if (ward.Id != this.selectedWardId && this.selectedWardId != 'All') return false
+            if (ward.HighCouncilorId != this.selectedHighCouncilId && this.selectedHighCouncilId != 0) return false
 
             return true
         })
 
-        buildingWards.forEach(ward => {
+        buildingWards.forEach(ward =>
+        {
 
             const tmpl = document.getElementById('ward-row-template').content.cloneNode(true)
             const hc = highCouncil.find(hc => hc.CallingId === ward.HighCouncilorId)
 
-            if(ward.IsAgentBishop && agentBishopLink) {
+            if (ward.IsAgentBishop && agentBishopLink)
+            {
                 agentBishopLink.innerText = ward.Bishop
                 agentBishopLink.href = ward.BishopProfile
             }
@@ -141,24 +164,29 @@ class WardsFilter {
             parent.appendChild(tmpl)
         })
 
-        return buildingWards.length > 0        
+        return buildingWards.length > 0
     }
 }
 
 
-async function loadBishopsFilter() {
-    try {
+async function loadBishopsFilter()
+{
+    try
+    {
         let wards = await service.getWards()
         wards = wards.sort((a, b) => a.Id - b.Id)
 
         const bishopsFilter = document.getElementById('bishop-name')
-        if (bishopsFilter) {
-            bishopsFilter.addEventListener('input', (e) => {
+        if (bishopsFilter)
+        {
+            bishopsFilter.addEventListener('input', (e) =>
+            {
                 filterWardId = +e.target.value
                 displayBuildings()
             })
 
-            wards.forEach(ward => {
+            wards.forEach(ward =>
+            {
                 const option = document.createElement("option")
                 option.value = ward.Id
                 option.textContent = `(${ward.Name}) ${ward.Bishop}`
@@ -166,7 +194,8 @@ async function loadBishopsFilter() {
             })
         }
     }
-    catch (e) {
+    catch (e)
+    {
         console.log(e)
     }
 

@@ -1,25 +1,5 @@
 class ResourceService {
 
-    // baseUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTJ1ibA1o-Sh4vzmHc6pKD0Ss3WfFzIe-qvvSPmG4gca8gLutRYK_dY0EWjsANFgB-pSVm4FOX6RZbH/pub?output=csv&single=true&gid=`
-
-    // urlVersion = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQVftOfID3yrlP8nTrNgXb-h5sxzwh7lm5A275ktecgevMl3A4rnYz2IaEXtZDizMgspG5elUH8HVFd/pub?output=csv`
-
-    // urlBuildings = `https://docs.google.com/spreadsheets/d/e/2PACX-1vT1iT5Bbu7lCzM0dkPb6QUdmIdgff6PrFsEd7PQanB1VVCxaGyIlC24OOvTOqkCMjC6ztjv9n44VpaO/pub?gid=156666937&single=true&output=csv`
-    // urlCallings = `https://docs.google.com/spreadsheets/d/e/2PACX-1vS9FzTQXNYIj838gubnNXyJvQ086V1nRoRsjzLbSMCAkeRYCCd2IKvYI80KUDDczEOYb8eAH5ifDEBq/pub?output=csv`
-    // urlPresidencyAssignments = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRexTnEzD9BuIokJ3VXyKOUxY-h0cQKmRWVoMEFot5tIKzJMPYpKV_QdY6nBBM9vEVsZXxKch3IcYRP/pub?gid=1193891930&single=true&output=csv`
-    // urlTOC = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQBJuohpXLJgD5yMu2IS4ccSG6nk1b_dq0kLy106mOH9I__N0Nmi0wVERmJF9Ac3tzGjLDLEbM1JnUw/pub?gid=915886203&single=true&output=csv`
-    // urlGeneral = `https://docs.google.com/spreadsheets/d/e/2PACX-1vS-KODJLl_MYEIJ-rhpqnazV8Zp2088nmfcp-AMo6ulWwWitLgAigO_rgRi0FKtPQuaEr-m7Aakkkeq/pub?gid=1476742322&single=true&output=csv`
-    // urlWardConferences = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTwk9v50j-ewt02iOjscPOzeyM9H4WC_Jh3-q77nxvjwomTb7PhJQWnweLAmlSEyV3v2xvmp7_o4nv8/pub?gid=0&single=true&output=csv`
-    // urlOrganizations = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRXoswdY80384PRJHEuCjrzJ0pUfSUymWvauESxl_6S-ziA318w_2AvKb3UG33xNiBhNUXRWYD-OfaL/pub?gid=1589061574&single=true&output=csv`
-    // urlSpeakingTopics = `https://docs.google.com/spreadsheets/d/e/2PACX-1vShLSfq9v59X45wZjG1uJ4oCvGCw0wBONGY-f1w9R9jxHOkYZGnYIGgeAwsEahwIPI3FGkEFDDSXndn/pub?gid=1693155233&single=true&output=csv`
-    // urlSpeakingAssignments = `https://docs.google.com/spreadsheets/d/e/2PACX-1vShLSfq9v59X45wZjG1uJ4oCvGCw0wBONGY-f1w9R9jxHOkYZGnYIGgeAwsEahwIPI3FGkEFDDSXndn/pub?gid=1229035460&single=true&output=csv`
-    // urlStakeConferences = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQFkx1KymZlZh8Wd2fGE8HmuVfGvxKA1d27U6GXIkvnNI_UG_sxqM41Yf7ajxwp-8IR_HuOqDwtBhMn/pub?gid=347409085&single=true&output=csv`
-    // urlYouthCamps = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTQ12RQSZuUViBmPcJ4gn1ho9fJ-13mFXAhjhuMWHa79sjEwvI0tCZEHd5QjKtLlDUCfYP5MixopAwL/pub?gid=994105212&single=true&output=csv`
-    // urlBishopPPIs = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRjjKdb-46zJgMHNUqlyLPQb0DP0wVgvIS6VasIXkQb4vgnLpv9qT1ho6RTxi0Bk9SS5K2wTHlZar-H/pub?gid=1332917091&single=true&output=csv`
-    // urlEldersPPIs = `https://docs.google.com/spreadsheets/d/e/2PACX-1vR0cNQQjHoQH4-NiQKII-Erth3qhmINb4pHHJ5ZXis4I-bnJQcHYBKaJFIRi0ODD_IoU4bWbgSjRRlk/pub?gid=101714891&single=true&output=csv`
-    // urlHighCouncilAssignments = `https://docs.google.com/spreadsheets/d/e/2PACX-1vSZBfm-7GNFWteGQcZqKn0dFbd7wkuj3ffgALslQ71s8UWpHXC5il7D4g2r7s4w7o4RxBLS78wlwsmL/pub?gid=2000120215&single=true&output=csv`
-    // urlWards = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRXnDUrHMji0m-MuGTukjsThqpb0Sz8xyAZWi9npEzRgXxYbGRjEpqja3PIHxQfCRl90MVR8huYABOH/pub?gid=1720792576&single=true&output=csv`
-
     urls = {
         Versions:`https://docs.google.com/spreadsheets/d/e/2PACX-1vQVftOfID3yrlP8nTrNgXb-h5sxzwh7lm5A275ktecgevMl3A4rnYz2IaEXtZDizMgspG5elUH8HVFd/pub?output=csv`,
         Buildings:`https://docs.google.com/spreadsheets/d/e/2PACX-1vT1iT5Bbu7lCzM0dkPb6QUdmIdgff6PrFsEd7PQanB1VVCxaGyIlC24OOvTOqkCMjC6ztjv9n44VpaO/pub?gid=156666937&single=true&output=csv`,
@@ -36,7 +16,8 @@ class ResourceService {
         BishopPPIs:`https://docs.google.com/spreadsheets/d/e/2PACX-1vRjjKdb-46zJgMHNUqlyLPQb0DP0wVgvIS6VasIXkQb4vgnLpv9qT1ho6RTxi0Bk9SS5K2wTHlZar-H/pub?gid=1332917091&single=true&output=csv`,
         EldersPPIs:`https://docs.google.com/spreadsheets/d/e/2PACX-1vR0cNQQjHoQH4-NiQKII-Erth3qhmINb4pHHJ5ZXis4I-bnJQcHYBKaJFIRi0ODD_IoU4bWbgSjRRlk/pub?gid=101714891&single=true&output=csv`,
         HighCouncilAssignments:`https://docs.google.com/spreadsheets/d/e/2PACX-1vSZBfm-7GNFWteGQcZqKn0dFbd7wkuj3ffgALslQ71s8UWpHXC5il7D4g2r7s4w7o4RxBLS78wlwsmL/pub?gid=2000120215&single=true&output=csv`,
-        Wards:`https://docs.google.com/spreadsheets/d/e/2PACX-1vRXnDUrHMji0m-MuGTukjsThqpb0Sz8xyAZWi9npEzRgXxYbGRjEpqja3PIHxQfCRl90MVR8huYABOH/pub?gid=1720792576&single=true&output=csv`
+        Wards:`https://docs.google.com/spreadsheets/d/e/2PACX-1vRXnDUrHMji0m-MuGTukjsThqpb0Sz8xyAZWi9npEzRgXxYbGRjEpqja3PIHxQfCRl90MVR8huYABOH/pub?gid=1720792576&single=true&output=csv`,
+        Welfare:`https://docs.google.com/spreadsheets/d/e/2PACX-1vTEWQtMCKDCVlKyyrfdUMd-DfTZplZvXTIuXIP7m7zsGo0bBYGjhqio2AY6W0lfMk9MZTVJNrQ-2G5x/pub?gid=1332917091&single=true&output=csv`
     }
 
     versions = null
@@ -204,6 +185,10 @@ class ResourceService {
 
     getYouthCamps = async () => {
         return await this.getData('YouthCamps')
+    }
+
+    getWelfare = async () => {
+        return await this.getData('Welfare')
     }
 
 }

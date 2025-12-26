@@ -3,4 +3,87 @@ layout: resource-guide
 title: Grantsville Utah Stake Resource Guide
 ---
 
-{% include guide/welfare.html %}
+<link rel="stylesheet" href="/assets/css/styles-welfare.css">
+<script src="/assets/js/pages/welfare.js"></script>
+
+<template id="welfare-ward-row-template">
+  <div class="table contact welfare-ward-table">
+    <div class="row-header">
+      <div class="ward-name"></div>
+      <div >
+        Total Hours:
+        <span class="ward-service-hours"></span>
+      </div>
+    </div>
+    <div class="row-ward row-sub-header">
+      <div class="service-date">date</div>
+      <div class="service-day">day</div>
+      <div class="service-assignment">assignment</div>
+      <div class="service-start">start time</div>
+      <div class="service-end">end time</div>
+      <div class="service-volunteers">people</div>
+    </div>
+  </div>
+</template>
+
+<template id="welfare-service-template">
+
+  <div class="row-ward row-sub-header">
+    <div class="service-date"></div>
+    <div class="service-day"></div>
+    <div class="service-assignment"></div>
+    <div class="service-start"></div>
+    <div class="service-end"></div>
+    <div class="service-volunteers"></div>
+  </div>
+
+  <div class="cell-ward">
+    <div class="cell-service-assignment"></div>
+    <div class="cell-row">
+      <div class="cell-50">
+        <div class="cell-sub-header">date</div>
+        <div class="cell-service-date"></div>
+      </div>
+      <div class="cell-50">
+        <div class="cell-sub-header">day</div>
+        <div class="cell-service-day"></div>
+      </div>
+    </div>
+    <div class="cell-row">
+      <div class="cell-50">
+        <div class="cell-sub-header">start time</div>
+        <div class="cell-service-start"></div>
+      </div>
+      <div class="cell-50">
+        <div class="cell-sub-header">end time</div>
+        <div class="cell-service-end"></div>
+      </div>
+    </div>
+    <div class="cell-50">
+      <div class="cell-sub-header">volunteers</div>
+      <div class="cell-service-volunteers"></div>
+    </div>
+  </div>
+  
+</template>
+
+<div id="stake-conference" class="card">
+  <section class="centered card-header">
+    <span id="welfare-header"></span>&nbsp;-&nbsp;<span id="year-holder"></span>
+  </section>
+
+
+  {% include controls/dropdown-years.html %}
+  {% include controls/dropdown-bishops.html %}
+
+  <div id="service-container" class="centered-column">
+  </div>
+
+  <seection class="centered">
+    <div class="centered table">
+      <div id="welfare-content" class="centered-column markdown-container"></div>
+    </div>
+  </seection>
+
+
+</div>

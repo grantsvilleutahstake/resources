@@ -40,9 +40,12 @@
     padding: 3px;
 }
 
-#ward-name {
+#ward-name-container {
     background-color: var(--background-sub-header);
     border-bottom: var(--border-standard);
+}
+
+#ward-name {
     font-weight: var(--font-weight-bold);
 }
 

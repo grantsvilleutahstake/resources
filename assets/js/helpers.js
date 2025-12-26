@@ -32,3 +32,18 @@ async function displaySection(section, key, headerId, contentId)
   document.getElementById(contentId).innerHTML = marked.parse(row.Value);
 
 }
+
+const yearSessionKey = `currentYear`
+function getCurrentYear()
+{  
+  let currentYear = sessionStorage.getItem(yearSessionKey)
+  
+  if(currentYear) return currentYear
+
+  return new Date().getFullYear()
+}
+
+function setCurrentYear(currentYear)
+{
+  sessionStorage.setItem(yearSessionKey, currentYear)
+}
