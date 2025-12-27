@@ -32,12 +32,12 @@ class ResourceGuideHeader {
   }
 
   pageResized = () => {
-    if(window.innerWidth <= 800) {
-      this.closeNavMenu()
-    }
-    else {
-      this.openNavMenu()
-    }
+    // if(window.innerWidth <= 800) {
+    //   this.closeNavMenu()
+    // }
+    // else {
+    //   this.openNavMenu()
+    // }
   }
 
   openNavMenu = () => {
