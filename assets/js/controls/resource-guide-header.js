@@ -17,10 +17,10 @@ class ResourceGuideHeader {
     this.mainNav = document.getElementById('nav-container')
 
     this.createNavButtons()
-    this.pageResized()
+    this.showHideNav()
 
     this.displayNavigationLinks()
-    window.addEventListener('resize', this.pageResized)
+    // window.addEventListener('resize', this.pageResized)
   }
 
   createNavButtons = () => {
@@ -31,13 +31,13 @@ class ResourceGuideHeader {
     closeNavButton.addEventListener('click', this.closeNavMenu)
   }
 
-  pageResized = () => {
-    // if(window.innerWidth <= 800) {
-    //   this.closeNavMenu()
-    // }
-    // else {
-    //   this.openNavMenu()
-    // }
+  showHideNav = () => {
+    if(window.innerWidth <= 800) {
+      this.closeNavMenu()
+    }
+    else {
+      this.openNavMenu()
+    }
   }
 
   openNavMenu = () => {
