@@ -21,7 +21,7 @@ class HighCouncilDropdown {
 
                 highCouncilors.forEach(hc => {
                     const option = document.createElement("option");
-                    option.value = hc.Id;
+                    option.value = hc.CallingId;
                     option.textContent = hc.Name;
                     dropdown.appendChild(option);
                 })
