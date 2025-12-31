@@ -9,7 +9,7 @@
 .markdown-container p {
     width: 90% !important;
     text-align: left !important;
-    margin: 5px 0;
+    margin: 5px 0 !important;
 }
 
 .markdown-container table {
@@ -17,6 +17,7 @@
     width: 90%;
     border: var(--border-standard);
     margin: 0;
+    margin-bottom: 20px !important;
 }
 
 

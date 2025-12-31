@@ -3,6 +3,8 @@
 document.addEventListener('DOMContentLoaded', async () => {
 
     displayPresidencyAssignments();
+    displaySection('Scheduling Appointments', 'Scheduling Appointments', 'scheduling-appointments-header', 'scheduling-appointments-content');
+
 
 })
 
