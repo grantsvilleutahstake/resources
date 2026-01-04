@@ -77,6 +77,13 @@ a:hover,
     color: red;
 }
 
+a.data-refresh-link {
+    color: rgb(0, 61, 0)
+}
+a.data-refresh-link:hover {
+    color: rgb(0, 121, 0)
+}
+
 #header .h1 {
     padding: 10px 0;
     border-top: solid 2px var(--border-color);

@@ -58,6 +58,11 @@ class ResourceService {
         
     }
 
+    clearVersions = async() => {
+        const key = 'Versions'
+        sessionStorage.removeItem(key)
+    }
+
     saveToLocal = (data, key) => {
         const body = {
             saveDate: Date.now(),

@@ -2,6 +2,8 @@ let contactInformationPage
 
 document.addEventListener('DOMContentLoaded', async () => {
   contactInformationPage = new ContactInformationPage()
+  
+  displaySection('Stake Contacts', 'Stake Contacts', 'stake-contacts-header');
 })
 
 class ContactInformationPage {

@@ -29,7 +29,7 @@ async function displaySection(section, key, headerId, contentId)
 
   document.getElementById(headerId).innerText = row.Header;
 
-  document.getElementById(contentId).innerHTML = marked.parse(row.Value);
+  if(contentId) document.getElementById(contentId).innerHTML = marked.parse(row.Value);
 
 }
 
