@@ -25,6 +25,7 @@ class SpeakingAssignments {
   currentAssignments
   callings
   wards
+  buildings
 
   constructor() {
     this.init()
@@ -41,6 +42,7 @@ class SpeakingAssignments {
     this.assignments = await service.getSpeakingAssignments()
     this.callings = await service.getCallings()
     this.wards = await service.getWards()
+    this.buildings = await service.getBuildings()
     console.table(this.wards)
 
     yearDropdown.onSelectionChanged(this.selectedYearChanged)
@@ -144,10 +146,12 @@ class SpeakingAssignments {
       const auxilliary = this.callings.find(calling => calling.SpeakerId == assignment.AuxilliaryId)
       const highCouncilor = this.callings.find(calling => calling.SpeakerId == assignment.HighCouncilId)
       const ward = wards.find(ward => ward.Id == assignment.WardId)
+      const building = this.buildings.find(building => building.BuildingId == ward.BuildingId)
 
       const template = document.getElementById('ward-assignment-template').content.cloneNode(true)
       template.getElementById('ward-name').innerText = assignment.WardId
       template.getElementById('ward-time').innerText = ward.SacramentMeeting
+      template.getElementById('building-name').innerText = `( ${building.Name} )`
       template.getElementById('auxilliary-name').innerText = `${auxilliary.Name} (${auxilliary.SpeakingAbbreviation})`
       template.getElementById('high-council-name').innerText = `${highCouncilor.Name} (${highCouncilor.SpeakingAbbreviation})`
 
