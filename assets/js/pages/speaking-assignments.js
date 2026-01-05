@@ -43,7 +43,6 @@ class SpeakingAssignments {
     this.callings = await service.getCallings()
     this.wards = await service.getWards()
     this.buildings = await service.getBuildings()
-    console.table(this.wards)
 
     yearDropdown.onSelectionChanged(this.selectedYearChanged)
     monthDropdown.onSelectionChanged(this.selectedMonthChanged)

@@ -26,6 +26,10 @@ class HighCouncilDropdown {
                     dropdown.appendChild(option);
                 })
             }
+            
+            setFilterFromUrl(dropdown, "hc")
+            this.selectedMonth = dropdown.value
+            
         }
         catch (e) {
             console.log(e);

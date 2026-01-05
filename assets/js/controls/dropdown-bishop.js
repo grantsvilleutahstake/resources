@@ -21,9 +21,9 @@ class BishopDropdown {
             wards = wards.filter(ward => ward.Year == currentYear)
                          .sort((a, b) => a.SortOrder - b.SortOrder);
 
-            const bishopsFilter = document.getElementById('bishop-select')
-            if (bishopsFilter) {
-                bishopsFilter.addEventListener('input', (e) => {
+            const dropdown = document.getElementById('bishop-select')
+            if (dropdown) {
+                dropdown.addEventListener('input', (e) => {
                     this.selectedBishopId = e.target.value
                     this.selectionChangedListener.raise(this.selectedBishopId)
                 })
@@ -32,9 +32,13 @@ class BishopDropdown {
                     const option = document.createElement("option");
                     option.value = ward.Id;
                     option.textContent = `(${ward.Abbreviation}) ${ward.Bishop}`;
-                    bishopsFilter.appendChild(option);
+                    dropdown.appendChild(option);
                 })
             }
+            
+            setFilterFromUrl(dropdown, "bishop")
+            this.selectedMonth = dropdown.value
+            
         }
         catch (e) {
             console.log(e);

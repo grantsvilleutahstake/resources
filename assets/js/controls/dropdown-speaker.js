@@ -27,6 +27,10 @@ class SpeakerDropdown {
                     dropdown.appendChild(option);
                 })
             }
+            
+            setFilterFromUrl(dropdown, "speaker")
+        this.selectedMonth = dropdown.value
+
         }
         catch (e) {
             console.log(e);
