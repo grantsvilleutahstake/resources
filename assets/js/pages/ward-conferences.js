@@ -72,14 +72,16 @@ class WardConferencePage {
 
     meetings.forEach(row => {
 
+      let building
+
       const ward = wards.find(ward => ward.Id == row.WardId && ward.Year == this.selectedYear )
-      const building = buildings.find(building => building.BuildingId == ward.BuildingId)
+      if(ward) building = buildings.find(building => building.BuildingId == ward.BuildingId)
 
       const div = document.getElementById('ward-conference-row-template').content.cloneNode(true)
 
-      div.querySelector('.ward-conference-name').innerText = ward.Name
-      div.querySelector('.ward-time').innerText = ward.SacramentMeeting
-      div.querySelector('.building-name').innerText = building.Name
+      div.querySelector('.ward-conference-name').innerText = ward ? ward.Name : row.WardId
+      div.querySelector('.ward-time').innerText = ward ? ward.SacramentMeeting : ''
+      div.querySelector('.building-name').innerText = building ? `(${building.Name})` : ''
       div.querySelector('.ward-conference-date').innerText = `${row.Month} ${row.Day}`
       div.querySelector('.ward-conference-speaker').innerText = row.Speaker
 
