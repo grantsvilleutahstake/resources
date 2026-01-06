@@ -97,7 +97,7 @@ class ResourceGuideHeader {
 
   refreshData = () => {
     const service = new ResourceService()
-    service.clearVersions()
+    service.clearCache()
     location.href = location.href
   }
 }

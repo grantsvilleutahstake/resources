@@ -58,9 +58,9 @@ class ResourceService {
         
     }
 
-    clearVersions = async() => {
-        const key = 'Versions'
-        sessionStorage.removeItem(key)
+    clearCache = async() => {
+        localStorage.clear()
+        sessionStorage.clear()
     }
 
     saveToLocal = (data, key) => {
