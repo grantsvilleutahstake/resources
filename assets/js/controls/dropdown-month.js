@@ -6,16 +6,24 @@ class MonthDropdown {
 
     constructor() {
 
-        const monthFilter = document.getElementById('month-select')
-        if (monthFilter) {
-            monthFilter.addEventListener('input', (e) => {
+        const dropdown = document.getElementById('month-select')
+        if (dropdown) {
+            dropdown.addEventListener('input', (e) => {
                 this.selectedMonth = +e.target.value
                 this.selectionChangedListener.raise(this.selectedMonth)
             })
         }
+
+        setFilterFromUrl(dropdown, "month")
+        this.selectedMonth = dropdown.value
+
     }
 
     onSelectionChanged = (callback) => {
         this.selectionChangedListener.subscribe(callback)
+    }
+
+    readQueryString = () => {
+        
     }
 }

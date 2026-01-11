@@ -15,6 +15,7 @@ class WardConferencePage {
 
   selectedWardId = 'All'
   selectedYear = 0
+  wards
 
   constructor()
   {
@@ -53,25 +54,34 @@ class WardConferencePage {
 
   displayWardConferences = async () => {
     let meetings = await service.getWardConferences()
+    let wards = await service.getWards()
+    let buildings = await service.getBuildings()
+
+    wards = wards.filter(ward => ward.Year == this.selectedYear)
+
+    meetings = meetings.filter(row => row.Year == this.selectedYear || this.selectedYear == 0)
     if (this.selectedWardId != 'All') {
       meetings = meetings.filter(row => {
           return row.WardId == this.selectedWardId
       })  
     }
 
-    meetings = meetings.filter(row => row.Year == this.selectedYear || this.selectedYear == 0)
-
-    console.table(meetings);
-    
 
     const parent = document.getElementById('ward-conference-table')
     parent.innerText = ''
 
     meetings.forEach(row => {
 
+      let building
+
+      const ward = wards.find(ward => ward.Id == row.WardId && ward.Year == this.selectedYear )
+      if(ward) building = buildings.find(building => building.BuildingId == ward.BuildingId)
+
       const div = document.getElementById('ward-conference-row-template').content.cloneNode(true)
 
-      div.querySelector('.ward-conference-name').innerText = row.WardId
+      div.querySelector('.ward-conference-name').innerText = ward ? ward.Name : row.WardId
+      div.querySelector('.ward-time').innerText = ward ? ward.SacramentMeeting : ''
+      div.querySelector('.building-name').innerText = building ? `(${building.Name})` : ''
       div.querySelector('.ward-conference-date').innerText = `${row.Month} ${row.Day}`
       div.querySelector('.ward-conference-speaker').innerText = row.Speaker
 

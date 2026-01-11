@@ -82,5 +82,22 @@ class ResourceGuideHeader {
       
       parent.appendChild(a)
     })
+
+    //add data sync/refresh button
+    const a = document.createElement('a')
+
+    a.innerHTML = '&nbsp;Refresh Data'
+    a.classList.add('data-refresh-link')
+    a.classList.add('bi')
+    a.classList.add('bi-arrow-clockwise')
+    a.addEventListener('click', this.refreshData)
+
+    parent.append(a)
+  }
+
+  refreshData = () => {
+    const service = new ResourceService()
+    service.clearCache()
+    location.href = location.href
   }
 }

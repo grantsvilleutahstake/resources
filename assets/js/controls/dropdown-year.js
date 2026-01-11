@@ -19,9 +19,9 @@ class YearDropdown {
             years.push(this.selectedYear)
             years = [...new Set(years)].sort((a, b) => a - b)
 
-            const yearFilter = document.getElementById('year-select')
-            if (yearFilter) {
-                yearFilter.addEventListener('input', (e) => {
+            const dropdown = document.getElementById('year-select')
+            if (dropdown) {
+                dropdown.addEventListener('input', (e) => {
                     this.selectedYear = +e.target.value
                     this.selectionChangedListener.raise(this.selectedYear)
                     setCurrentYear(this.selectedYear)
@@ -36,9 +36,13 @@ class YearDropdown {
                         option.selected = true
                     }
 
-                    yearFilter.appendChild(option);
+                    dropdown.appendChild(option);
                 })
             }
+            
+            // setFilterFromUrl(dropdown, "year")
+            // this.selectedMonth = dropdown.value
+            
         }
         catch (e) {
             console.log(e);

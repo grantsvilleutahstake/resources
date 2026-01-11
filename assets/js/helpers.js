@@ -29,7 +29,7 @@ async function displaySection(section, key, headerId, contentId)
 
   document.getElementById(headerId).innerText = row.Header;
 
-  document.getElementById(contentId).innerHTML = marked.parse(row.Value);
+  if(contentId) document.getElementById(contentId).innerHTML = marked.parse(row.Value);
 
 }
 
@@ -37,13 +37,26 @@ const yearSessionKey = `currentYear`
 function getCurrentYear()
 {  
   let currentYear = sessionStorage.getItem(yearSessionKey)
-  
-  if(currentYear) return currentYear
+  const params = new URLSearchParams(window.location.search)
 
-  return new Date().getFullYear()
+  const urlYear = params.get("year")
+  
+  if(urlYear) return urlYear
+  if(currentYear) return currentYear
+  else return new Date().getFullYear()
 }
 
 function setCurrentYear(currentYear)
 {
   sessionStorage.setItem(yearSessionKey, currentYear)
+}
+
+function setFilterFromUrl(dropdown, key)
+{  
+    const params = new URLSearchParams(window.location.search)
+
+    const option = params.get(key)
+    if (option) {
+        dropdown.value = option            
+    }
 }

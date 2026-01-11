@@ -11,20 +11,24 @@ class BuildingDropdown {
         try {
             const buildings = await service.getBuildings();
 
-            const buildingSelect = document.getElementById('building-select')
-            if (buildingSelect) {
-                buildingSelect.addEventListener('input', (e) => {
+            const dropdown = document.getElementById('building-select')
+            if (dropdown) {
+                dropdown.addEventListener('input', (e) => {
                     this.selectedBuildingId = +e.target.value;
                     this.selectionChangedListener.raise(this.selectedBuildingId)
                 })
 
-                buildings.forEach(building => {
+                dropdown.forEach(building => {
                     const option = document.createElement("option");
                     option.value = building.BuildingId;
                     option.textContent = building.Name;
-                    buildingSelect.appendChild(option);
+                    dropdown.appendChild(option);
                 })
             }
+            
+            setFilterFromUrl(dropdown, "building")
+            this.selectedMonth = dropdown.value
+            
         }
         catch (e) {
             console.log(e);

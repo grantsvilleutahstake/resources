@@ -58,6 +58,11 @@ class ResourceService {
         
     }
 
+    clearCache = async() => {
+        localStorage.clear()
+        sessionStorage.clear()
+    }
+
     saveToLocal = (data, key) => {
         const body = {
             saveDate: Date.now(),
