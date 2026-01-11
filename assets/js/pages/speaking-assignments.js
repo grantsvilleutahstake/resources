@@ -145,11 +145,17 @@ class SpeakingAssignments {
       const highCouncilor = this.callings.find(calling => calling.SpeakerId == assignment.HighCouncilId)
       const ward = wards.find(ward => ward.Id == assignment.WardId)
 
+      console.log(auxilliary)
+      console.log(highCouncilor)
+      
+
       const template = document.getElementById('ward-assignment-template').content.cloneNode(true)
       template.getElementById('ward-name').innerText = assignment.WardId
       template.getElementById('ward-time').innerText = ward.SacramentMeeting
       template.getElementById('auxilliary-name').innerText = `${auxilliary.Name} (${auxilliary.SpeakingAbbreviation})`
+      template.getElementById('auxilliary-name').href = auxilliary.Profile
       template.getElementById('high-council-name').innerText = `${highCouncilor.Name} (${highCouncilor.SpeakingAbbreviation})`
+      template.getElementById('high-council-name').href = highCouncilor.Profile
 
       parent.appendChild(template)
     })

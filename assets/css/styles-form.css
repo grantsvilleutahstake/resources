@@ -15,15 +15,15 @@
 .row-input > input,
 .row-input > select {
     width: 40%;
-    border: solid 1px #777;
+    border: solid 1px var(--border-color-form);
     border-radius: 5px;
     padding: 10px;
 }
 
 select {
-  appearance: none;        /* Modern browsers */
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;        /* Modern browsers */
 
   background-image: url('/assets/images/dropdown-arrow.svg'); /* Your custom arrow */
   background-repeat: no-repeat;
