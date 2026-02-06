@@ -18,7 +18,7 @@ class BuildingDropdown {
                     this.selectionChangedListener.raise(this.selectedBuildingId)
                 })
 
-                dropdown.forEach(building => {
+                buildings.forEach(building => {
                     const option = document.createElement("option");
                     option.value = building.BuildingId;
                     option.textContent = building.Name;

@@ -21,9 +21,7 @@ function parseDate(str) {
  */
 async function displaySection(section, key, headerId, contentId)
 {
-  const generalInfo = await service.getGeneralInformation();
-
-  const row = generalInfo.find(info => info.Section === section && info.Key === key);
+  const row = await service.getRow(section, key)
 
   if(!row) return;
 

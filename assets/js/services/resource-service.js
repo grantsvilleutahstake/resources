@@ -114,10 +114,41 @@ class ResourceService {
 
     getGeneralInformation = async () => {
         return await this.getData('General')
+    }    
+
+
+    getRow = async (section, key) => 
+    {
+        const generalInfo = await this.getGeneralInformation();
+
+        const row = generalInfo.find(info => info.Section === section && info.Key === key);
+
+        return row;
+    }
+    
+
+    getBaseUrl = async () =>
+    {
+        const row = await this.getRow('Global','Base Url')
+
+        if(!row) return '';
+
+        return row.Value
     }
 
     getCallings = async () => {
-        return await this.getData('Callings')
+        const baseUrl = await this.getBaseUrl()
+        const callings =  await this.getData('Callings')
+
+        const people = callings.map(calling => {
+            const person =  {
+                ...calling,
+                Profile: `${baseUrl}${calling.Profile}`
+            }
+            return person
+        })
+
+        return people
     }
 
     getPresidencyAssignments = async () => {
@@ -139,7 +170,18 @@ class ResourceService {
     }
 
     getWards = async () => {
-        return await this.getData('Wards')
+        const baseUrl = await this.getBaseUrl()
+        const wards = await this.getData('Wards')
+
+        const people = wards.map(ward => {
+            const person =  {
+                ...ward,
+                BishopProfile: `${baseUrl}${ward.BishopProfile}`
+            }
+            return person
+        })
+
+        return people
     }
 
     getWardConferences = async () => {
