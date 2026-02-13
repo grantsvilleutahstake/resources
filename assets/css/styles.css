@@ -47,22 +47,54 @@ hr {
     border-bottom: solid 1px var(--border-color) !important;
 }
 
+.md-content p {
+    padding: 0;
+    margin: 0;
+}
+
+/* width */
+
+.w-100 {
+    width: 100% !important;
+}
+
 
 /* margins */
 .m-0 {
     margin: 0 !important;
 }
 .m-1 {
-    margin: 2px;
+    margin: 2px !important;
 }
 .m-2 {
-    margin: 5px;
+    margin: 5px !important;
 }
 .m-3 {
-    margin: 10px;
+    margin: 10px !important;
 }
 .m-4 {
-    margin: 20px;
+    margin: 20px !important;
+}
+
+.mtb-0 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+.mtb-1 {
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+}
+.mtb-2 {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+.mtb-3 {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+.mtb-4 {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
 }
 
 a,
@@ -89,6 +121,15 @@ a.data-refresh-link:hover {
     padding: 10px 0;
     border-top: solid 2px var(--border-color);
     border-bottom: solid 2px var(--border-color);
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
 }
 
 .nav-header {
@@ -324,6 +365,10 @@ img#dp-temple {
     padding-bottom: 10px;
 }
 
+.card-no-border {
+    border: 0 !important;
+}
+
 .card-header {
     padding: 10px 0;
     background-color: var(--background-header);
@@ -371,6 +416,10 @@ img#dp-temple {
         display: unset;
     }
      
+    #key {
+        font-size: .8rem;
+        margin: 5px 0;
+    }
     .row, .row-header
     {
         display: flex;

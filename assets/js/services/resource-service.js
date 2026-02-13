@@ -12,6 +12,7 @@ class ResourceService {
         SpeakingTopics:`https://docs.google.com/spreadsheets/d/e/2PACX-1vShLSfq9v59X45wZjG1uJ4oCvGCw0wBONGY-f1w9R9jxHOkYZGnYIGgeAwsEahwIPI3FGkEFDDSXndn/pub?gid=1693155233&single=true&output=csv`,
         SpeakingAssignments:`https://docs.google.com/spreadsheets/d/e/2PACX-1vShLSfq9v59X45wZjG1uJ4oCvGCw0wBONGY-f1w9R9jxHOkYZGnYIGgeAwsEahwIPI3FGkEFDDSXndn/pub?gid=1229035460&single=true&output=csv`,
         StakeConferences:`https://docs.google.com/spreadsheets/d/e/2PACX-1vQFkx1KymZlZh8Wd2fGE8HmuVfGvxKA1d27U6GXIkvnNI_UG_sxqM41Yf7ajxwp-8IR_HuOqDwtBhMn/pub?gid=347409085&single=true&output=csv`,
+        StakeConferenceProgram: `https://docs.google.com/spreadsheets/d/e/2PACX-1vQpQ9BcNzg0ccGvpHScbvqo71ByQoQIJAHtNwsubWTU9_3gSH4WeiaLjbEDjIdLQ8eONl-PPSW4IMa2/pub?output=csv`,
         YouthCamps:`https://docs.google.com/spreadsheets/d/e/2PACX-1vTQ12RQSZuUViBmPcJ4gn1ho9fJ-13mFXAhjhuMWHa79sjEwvI0tCZEHd5QjKtLlDUCfYP5MixopAwL/pub?gid=994105212&single=true&output=csv`,
         BishopPPIs:`https://docs.google.com/spreadsheets/d/e/2PACX-1vRjjKdb-46zJgMHNUqlyLPQb0DP0wVgvIS6VasIXkQb4vgnLpv9qT1ho6RTxi0Bk9SS5K2wTHlZar-H/pub?gid=1332917091&single=true&output=csv`,
         EldersPPIs:`https://docs.google.com/spreadsheets/d/e/2PACX-1vR0cNQQjHoQH4-NiQKII-Erth3qhmINb4pHHJ5ZXis4I-bnJQcHYBKaJFIRi0ODD_IoU4bWbgSjRRlk/pub?gid=101714891&single=true&output=csv`,
@@ -116,7 +117,6 @@ class ResourceService {
         return await this.getData('General')
     }    
 
-
     getRow = async (section, key) => 
     {
         const generalInfo = await this.getGeneralInformation();
@@ -126,7 +126,6 @@ class ResourceService {
         return row;
     }
     
-
     getBaseUrl = async () =>
     {
         const row = await this.getRow('Global','Base Url')
@@ -208,6 +207,10 @@ class ResourceService {
 
     getStakeConference = async () => {
         return await this.getData('StakeConferences')
+    }
+
+    getStakeConferenceProgram = async () => {
+        return await this.getData('StakeConferenceProgram')
     }
 
     getBishopPPIs = async () => {
