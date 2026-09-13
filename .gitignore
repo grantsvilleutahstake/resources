@@ -7,3 +7,8 @@ _site/
 vendor/
 # macOS
 .DS_Store
+
+# Bundler lockfile: local only. GitHub Pages builds with its own pinned
+# github-pages gem set and ignores this, and a Windows-generated lock
+# (PLATFORMS x64-mingw-ucrt) cannot be satisfied on their Linux builder.
+Gemfile.lock
