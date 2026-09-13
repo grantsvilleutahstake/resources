@@ -20,7 +20,9 @@ class ResourceGuideHeader {
     this.showHideNav()
 
     this.displayNavigationLinks()
-    // window.addEventListener('resize', this.pageResized)
+
+    // keeps the drawer and the desktop sidebar in step when the window is resized
+    window.addEventListener('resize', this.showHideNav)
   }
 
   createNavButtons = () => {

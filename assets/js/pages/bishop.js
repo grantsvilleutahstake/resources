@@ -1,10 +1,14 @@
 let bishopPage
 let bishopDropdown
+let yearDropdown
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-
   bishopDropdown = new BishopDropdown()
+
+  // the bishop PPI sheet covers different years than the wards sheet,
+  // so the dropdown takes its years from this page's own data
+  yearDropdown = new YearDropdown(() => service.getBishopPPIs())
 
   bishopPage = new BishopPage()
 
@@ -16,10 +20,12 @@ class BishopPage {
 
   constructor() {
 
+    this.displayYear()
     this.displayBishopPPIs()
     this.displayTransientBishopInformation()
-    
+
     bishopDropdown.onSelectionChanged(this.selectedBishopChanged)
+    yearDropdown.onSelectionChanged(this.selectedYearChanged)
   }
 
 
@@ -29,14 +35,29 @@ class BishopPage {
   }
 
 
+  selectedYearChanged = (year) => {
+      this.displayYear()
+      this.displayBishopPPIs()
+  }
+
+
+  displayYear = () => {
+      document.getElementById('bishop-ppi-header').innerText =
+          `Bishop PPI Schedule - ${yearDropdown.selectedYear}`
+  }
+
+
   displayBishopPPIs = async () => {
     let ppis = await service.getBishopPPIs()
+
+    ppis = ppis.filter(row => row.Year == yearDropdown.selectedYear)
+
     if (this.selectedWardId != 'All') {
       ppis = ppis.filter(row => {
           return row.WardId == this.selectedWardId
       })  
     }
-    console.table(ppis)
+
     const parent = document.getElementById('bishop-ppi-table')
     parent.innerText = ''
 

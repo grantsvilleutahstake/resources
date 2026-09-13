@@ -46,7 +46,10 @@ title: Grantsville Utah Stake Resource Guide
     </div>
 </template>
 
-{% include controls/dropdown-bishops.html %}
+<div class="filters-container">
+  {% include controls/dropdown-years.html %}
+  {% include controls/dropdown-bishops.html %}
+</div>
 
 <div id="bishops" class="card">
   <section class="centered card-header">
@@ -56,15 +59,18 @@ title: Grantsville Utah Stake Resource Guide
   <section class="centered">
   <div class="centered table" >
     <div class="row-header cell" id="bishop-ppi-header">Bishop PPI Schedule</div>
+
+    <!-- outside #bishop-ppi-table: that element is emptied on every redraw -->
+    <div class="row-ppi row-sub-header">
+        <div class="row-ppi-ward">ward</div>
+        <div class="row-ppi-time">time</div>
+        <div class="row-ppi-quarter ppi-q1">q1</div>
+        <div class="row-ppi-quarter ppi-q2">q2</div>
+        <div class="row-ppi-quarter ppi-q3">q3</div>
+        <div class="row-ppi-quarter ppi-q4">q4</div>
+    </div>
+
     <div id="bishop-ppi-table">
-      <div class="row-ppi row-sub-header">
-          <div class="row-ppi-ward">ward</div>
-          <div class="row-ppi-time">time</div>
-          <div class="row-ppi-quarter ppi-q1">q1</div>
-          <div class="row-ppi-quarter ppi-q2">q2</div>
-          <div class="row-ppi-quarter ppi-q3">q3</div>
-          <div class="row-ppi-quarter ppi-q4">q4</div>
-      </div>
     </div>
   </div>
   </section>

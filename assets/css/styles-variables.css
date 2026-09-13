@@ -2,6 +2,7 @@
   --background-header: #eeeeee;
   /* --background-sub-header: #f8f2ec; */
   --background-sub-header: #f3f3f3;
+  --background-sub-header-hover: #e4e4e4;
 
   --border-standard: solid 1px #ccc;
   --border-color: #ccc;
@@ -17,4 +18,17 @@
   --font-weight-regular: 300;
   --font-weight-bold: 500;
   --font-weight-extra-bold: 700;
+
+  --background-page: #ffffff;
+
+  --sidebar-width: 250px;
+  --header-height: 76px;
+  /* lifts the sunset in the header strip; past ~1.75 the sky posterises */
+  --header-image-filter: saturate(1.5) contrast(1.08);
+
+  /* deseret-peak-temple.webp is 1000x563; driving the hero height from the
+     image's own aspect ratio means it is never cropped at full page width */
+  --hero-ratio: 1.7762;
+  --hero-height: min(calc(100vw / var(--hero-ratio)), 100vh);
+  --hero-scrim-bottom: rgba(0, 0, 0, 0.55);
 }

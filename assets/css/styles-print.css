@@ -16,7 +16,9 @@
         break-after: page;
     }
     .clickable,
-    .back-link {
+    .back-link,
+    #nav-container,
+    #hamburger-container {
         display: none !important;
     }
 

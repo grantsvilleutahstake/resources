@@ -16,9 +16,9 @@ body {
 main {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     padding: 0;
-    margin: 10px;
+    margin: 0;
 }
 
 h1,
@@ -97,6 +97,59 @@ hr {
     margin-bottom: 20px !important;
 }
 
+/* ---------------------------------------------------------------
+   Scrollbars: nothing by default, a subtle white pill on hover.
+   Applies to the page and to the resource guide sidebar.
+   Note: thumb length is set by the browser from the visible/total
+   ratio -- CSS honours min-height on the thumb but not max-height.
+   --------------------------------------------------------------- */
+
+html,
+#nav-container {
+    /* Firefox: no border support, so its thumb is a flat light grey */
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+html:hover,
+#nav-container:hover {
+    scrollbar-color: var(--border-color) transparent;
+}
+
+html::-webkit-scrollbar,
+#nav-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* no arrow buttons at either end */
+html::-webkit-scrollbar-button,
+#nav-container::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+html::-webkit-scrollbar-track,
+html::-webkit-scrollbar-corner,
+#nav-container::-webkit-scrollbar-track,
+#nav-container::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+html::-webkit-scrollbar-thumb,
+#nav-container::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border: solid 1px transparent;
+    border-radius: 999px;
+    transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+html:hover::-webkit-scrollbar-thumb,
+#nav-container:hover::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-color: var(--border-color);
+}
+
 a,
 a:visited,
 .link {
@@ -130,33 +183,6 @@ a.data-refresh-link:hover {
 .flex-col {
     display: flex;
     flex-direction: column;
-}
-
-.nav-header {
-    display: flex;
-    align-items: end;
-
-    background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.613), rgba(255,255,255,0.613)),
-        url('/assets/images/deseret-peak-temple.webp');
-    background-size: cover, cover;
-    background-position:
-        center center,   /* for the gradient */
-        center -120px;    /* for the image (X position first, then Y) */
-
-    height: 120px;
-    border-bottom: solid 3px var(--border-color);
-}
-
-
-.nav-header img {
-    height: 100px;
-}
-
-.nav-header h2 {
-    margin: 5px 10px;
-    text-align: center;
-    flex-grow: 1;
 }
 
 .clickable {
@@ -203,6 +229,8 @@ img#dp-temple {
     display: flex;
     flex-direction: column;
     width: 90%;
+    margin-left: auto;
+    margin-right: auto;
     padding-bottom: 20px;
 }
 
@@ -358,9 +386,9 @@ img#dp-temple {
 }
 
 .card {
-    border: solid 1px var(--border-color);
+    /* border: solid 1px var(--border-color); */
     /* border-radius: var(--border-radius-card); */
-    width: 90vw; 
+    width: 100%;
     justify-self: center;
     padding-bottom: 10px;
 }
@@ -397,11 +425,14 @@ img#dp-temple {
 
 @media screen and (max-width: 800px) {
 
-    img#dp-temple,
+    img#dp-temple {
+        width: 95vw !important;
+    }
+
     .card,
     h1,
     .h1 {
-        width: 95vw !important;
+        width: 100% !important;
     }
     
     .nav-header {

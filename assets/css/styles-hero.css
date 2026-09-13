@@ -1,0 +1,144 @@
+/* =============================================================
+   Hero pages — the fixed, full-bleed temple image that page
+   content scrolls up over.
+
+   Loaded only by the `basic` and `resource-guide-home` layouts,
+   so the `main` override below is safe: those layouts serve only
+   the site home page and the resource guide home page.
+   ============================================================= */
+
+main {
+    margin: 0;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* ---------- the fixed image ---------- */
+
+.hero {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--hero-height);
+    z-index: 0;
+
+    background-image: url('/assets/images/deseret-peak-temple.webp');
+    background-size: cover;
+    /* anchored to the top so the spire is never the thing that gets cut */
+    background-position: center top;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+/* bottom-only scrim: it sits over the grass below the temple, so the
+   building and sky stay untouched while the title stays readable */
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 78% 0 0 0;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            var(--hero-scrim-bottom) 100%);
+}
+
+.hero-title {
+    position: relative;
+    z-index: 1;
+    width: 100% !important;
+    margin: 0;
+    /* proportional to width, which the hero height also tracks, so the title
+       stays in the band below the temple at every viewport size */
+    padding: 0 20px 1.6vw;
+    border: 0;
+
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 4.6vw, 3.25rem);
+    line-height: 1.15;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
+}
+
+/* Very wide, short viewports (ultrawide monitors, squat windows).
+   Past roughly 9:4 the 100vh cap makes `cover` scale the photo up far enough
+   to cut the temple's base off, so fit the whole photo instead and fill the
+   side gutters with a sky-to-ground gradient sampled from the image itself. */
+@media screen and (min-aspect-ratio: 9/4) {
+    .hero {
+        background-image:
+            url('/assets/images/deseret-peak-temple.webp'),
+            linear-gradient(to bottom,
+                rgb(111, 136, 150) 0%,
+                rgb(180, 158, 136) 50%,
+                rgb(51, 64, 28) 100%);
+        background-size: contain, cover;
+        background-position: center top, center top;
+        background-repeat: no-repeat, no-repeat;
+    }
+}
+
+/* holds the space the fixed hero occupies, so content starts below it */
+.hero-spacer {
+    height: var(--hero-height);
+    flex-shrink: 0;
+}
+
+/* ---------- the content that scrolls over it ---------- */
+
+.page-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    /* tall enough that scrolling fully covers the hero */
+    min-height: 100vh;
+    background-color: var(--background-page);
+    box-shadow: 0 -18px 40px rgba(0, 0, 0, 0.3);
+}
+
+.section {
+    width: 100%;
+}
+
+.section+.section {
+    border-top: solid 1px var(--border-color);
+}
+
+.section-body {
+    width: 100%;
+    padding: 24px;
+}
+
+/* ---------- full width link lists (home links, guide sections) ---------- */
+
+.link-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+}
+
+.link-list a {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    font-size: 1.15rem;
+    text-decoration: none;
+    background-color: var(--background-sub-header);
+    border-radius: var(--border-radius);
+}
+
+.link-list a:hover,
+.link-list a:focus-visible {
+    background-color: var(--background-sub-header-hover);
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 800px) {
+    .section-body {
+        padding: 16px;
+    }
+}

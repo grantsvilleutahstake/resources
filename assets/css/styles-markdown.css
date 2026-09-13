@@ -2,14 +2,76 @@
     margin-top: 20px;
 }
 
+/* The container is a centred flex column, so every top level block needs the
+   same measure or it will not line up with its neighbours. Lists were missing
+   from this list, which is why their markers hung out to the left. */
 .markdown-container h1,
 .markdown-container h2,
 .markdown-container h3,
 .markdown-container h4,
-.markdown-container p {
+.markdown-container p,
+.markdown-container ol,
+.markdown-container ul {
     width: 90% !important;
     text-align: left !important;
     margin: 5px 0 !important;
+}
+
+/* Lists: the marker sits on the same left edge as the paragraphs and the item
+   text hangs indented past it. Markers are drawn with counters rather than
+   list-style, because list-style: outside gives no control over where the
+   marker lands. */
+.markdown-container ol,
+.markdown-container ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.markdown-container ol {
+    counter-reset: md-item;
+}
+
+.markdown-container li {
+    position: relative;
+    padding-left: 2em;
+    margin-bottom: 0.6em;
+}
+
+.markdown-container ol > li {
+    counter-increment: md-item;
+}
+
+.markdown-container ol > li::before {
+    content: counter(md-item) ".";
+}
+
+.markdown-container ul > li::before {
+    content: "•";
+}
+
+.markdown-container li::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-header);
+}
+
+/* A loose markdown list wraps each item's text in <p>, which the rule above
+   would otherwise shrink to 90% of the item. */
+.markdown-container li p {
+    width: 100% !important;
+    margin: 0 0 0.5em 0 !important;
+}
+
+.markdown-container li p:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* nested lists indent from the item they sit in, not from the container */
+.markdown-container li ol,
+.markdown-container li ul {
+    width: 100% !important;
+    margin: 0.5em 0 0 0 !important;
 }
 
 .markdown-container table {
