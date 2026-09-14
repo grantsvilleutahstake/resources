@@ -18,7 +18,9 @@
     .clickable,
     .back-link,
     #nav-container,
-    #hamburger-container {
+    #hamburger-container,
+    .hero,
+    .hero-spacer {
         display: none !important;
     }
 

@@ -1,3 +1,77 @@
+/* The program's session headings are full width, so long titles ran into the
+   screen edges. The padding matches the gutter on the .table below them so the
+   headings line up with the program rows - .table is 90% wide, dropping to 95%
+   under 600px, so these two values have to stay in step with it. */
+
+#meeting-header,
+#meeting-sub-header {
+    padding-left: 5%;
+    padding-right: 5%;
+    margin: 0;
+}
+
+#meeting-header{
+    margin-top: 10px;
+}
+
+#meeting-sub-header{
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 600px) {
+
+    #meeting-header,
+    #meeting-sub-header {
+        padding-left: 2.5%;
+        padding-right: 2.5%;
+    }
+}
+
+
+/* ---------------------------------------------------------------
+   Stake conference home page only: the session links in the sheet's
+   markdown read as tiles, matching the resource guide home page.
+
+   Scoped to #stake-conference-content deliberately - that id exists
+   only on stake-conference/index.html, so no other markdown picks
+   this up, even though this sheet also loads on the guide pages.
+   --------------------------------------------------------------- */
+
+#stake-conference-content ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px !important;
+}
+
+/* drop the bullet and the hanging indent the markdown styles add */
+#stake-conference-content ul > li {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+#stake-conference-content ul > li::before {
+    content: none;
+}
+
+#stake-conference-content ul > li > a {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    font-size: 1.15rem;
+    text-decoration: none;
+    background-color: var(--background-sub-header);
+    border-radius: var(--border-radius);
+}
+
+#stake-conference-content ul > li > a:hover,
+#stake-conference-content ul > li > a:focus-visible {
+    background-color: var(--background-sub-header-hover);
+    text-decoration: underline;
+}
+
+
 .stake-conference {
     border-bottom: solid 1px var(--border-color);
     padding: 10px;
@@ -15,6 +89,18 @@
 .stake-conference-header {
     background-color: var(--background-header);
 }
+#toc {
+    background-color: #eee;
+}
+
+#program-section-container {
+    border-radius: 5pt;
+    background-color: white;
+}
+
+/* .contact {
+    padding-bottom: 0 !important;
+} */
 
 
 @media screen and (max-width: 1280px) {

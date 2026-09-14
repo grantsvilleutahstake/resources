@@ -44,10 +44,11 @@
     position: absolute;
     inset: 0;
 
-    background-image: url('/assets/images/deseret-peak-temple.webp');
+    background-image: var(--hero-image);
     background-size: cover;
-    /* 30% framing clips the spire; 20% keeps it inside the band */
-    background-position: center 20%;
+    /* the band shows ~54% of the frame, too short for the whole building;
+       40% keeps the spire and as much of the temple as will fit */
+    background-position: center 40%;
     background-repeat: no-repeat;
 
     filter: var(--header-image-filter);

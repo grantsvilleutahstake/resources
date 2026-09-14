@@ -1,48 +1,74 @@
 /* =============================================================
-   Hero pages — the fixed, full-bleed temple image that page
-   content scrolls up over.
+   Hero pages — a fixed, full-bleed picture that the page content
+   scrolls up over. Used by the site home page, the resource guide
+   home page, and the stake conference pages.
 
-   Loaded only by the `basic` and `resource-guide-home` layouts,
-   so the `main` override below is safe: those layouts serve only
-   the site home page and the resource guide home page.
+   The picture comes from --hero-image so a page can swap it by
+   setting that variable (see .hero-conference at the bottom).
    ============================================================= */
 
-main {
-    margin: 0;
-    width: 100%;
-    align-items: stretch;
-}
+/* ---------- the fixed image ----------
 
-/* ---------- the fixed image ---------- */
+   The hero is sized from the viewport, not from the photo, and the photo is
+   fitted inside it with `contain` so the whole frame is always visible. A
+   blurred, over-scaled copy of the same photo fills whatever the photo does
+   not cover. Because nothing is ever cropped, the picture can be swapped by
+   changing --hero-image alone - no aspect ratio to keep in step.
+
+   Portrait: the hero IS the photo - full width, its own height, nothing else.
+   No backdrop shows, and the page stays short.
+   Landscape: the hero is shortened so some content shows below it, which
+   leaves gutters either side of the photo for the blur to fill.
+   ------------------------------------------------------------------------ */
 
 .hero {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: var(--hero-height);
+    /* portrait: exactly as tall as the photo is at full width */
+    aspect-ratio: var(--hero-ratio);
+    height: auto;
     z-index: 0;
+    overflow: hidden;
 
-    background-image: url('/assets/images/deseret-peak-temple.webp');
-    background-size: cover;
-    /* anchored to the top so the spire is never the thing that gets cut */
-    background-position: center top;
-    background-repeat: no-repeat;
+    background-color: var(--hero-backdrop);
 
     display: flex;
     align-items: flex-end;
     justify-content: center;
 }
 
-/* bottom-only scrim: it sits over the grass below the temple, so the
-   building and sky stay untouched while the title stays readable */
+/* blurred fill. Over-scaled because blur samples past the edges as
+   transparent, which would otherwise leave a soft rim. */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+
+    background-image: var(--hero-image);
+    background-size: cover;
+    background-position: center;
+
+    filter: blur(var(--hero-blur)) saturate(1.1);
+    transform: scale(1.15);
+}
+
+/* the photo itself, whole frame, plus the scrim that keeps the title legible.
+   First background layer paints on top, so the gradient sits over the photo. */
 .hero::after {
     content: '';
     position: absolute;
-    inset: 78% 0 0 0;
-    background: linear-gradient(to bottom,
-            rgba(0, 0, 0, 0) 0%,
-            var(--hero-scrim-bottom) 100%);
+    inset: 0;
+
+    background-image:
+        linear-gradient(to bottom,
+            rgba(0, 0, 0, 0) 58%,
+            var(--hero-scrim-bottom) 100%),
+        var(--hero-image);
+    background-size: 100% 100%, contain;
+    background-position: center, center var(--hero-photo-y);
+    background-repeat: no-repeat, no-repeat;
 }
 
 .hero-title {
@@ -50,9 +76,7 @@ main {
     z-index: 1;
     width: 100% !important;
     margin: 0;
-    /* proportional to width, which the hero height also tracks, so the title
-       stays in the band below the temple at every viewport size */
-    padding: 0 20px 1.6vw;
+    padding: 0 20px 4vh;
     border: 0;
 
     text-align: center;
@@ -60,31 +84,30 @@ main {
     font-weight: 700;
     font-size: clamp(1.6rem, 4.6vw, 3.25rem);
     line-height: 1.15;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
-}
-
-/* Very wide, short viewports (ultrawide monitors, squat windows).
-   Past roughly 9:4 the 100vh cap makes `cover` scale the photo up far enough
-   to cut the temple's base off, so fit the whole photo instead and fill the
-   side gutters with a sky-to-ground gradient sampled from the image itself. */
-@media screen and (min-aspect-ratio: 9/4) {
-    .hero {
-        background-image:
-            url('/assets/images/deseret-peak-temple.webp'),
-            linear-gradient(to bottom,
-                rgb(111, 136, 150) 0%,
-                rgb(180, 158, 136) 50%,
-                rgb(51, 64, 28) 100%);
-        background-size: contain, cover;
-        background-position: center top, center top;
-        background-repeat: no-repeat, no-repeat;
-    }
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
 }
 
 /* holds the space the fixed hero occupies, so content starts below it */
 .hero-spacer {
-    height: var(--hero-height);
+    width: 100%;
+    aspect-ratio: var(--hero-ratio);
+    height: auto;
     flex-shrink: 0;
+}
+
+/* Wide or horizontal: shorten the hero so the top of the content shows. */
+@media screen and (orientation: landscape) {
+
+    .hero,
+    .hero-spacer {
+        aspect-ratio: auto;
+        height: var(--hero-height-landscape);
+    }
+
+    /* the hero is short here, so the photo sits centred in it */
+    .hero {
+        --hero-photo-y: 50%;
+    }
 }
 
 /* ---------- the content that scrolls over it ---------- */
@@ -141,4 +164,14 @@ main {
     .section-body {
         padding: 16px;
     }
+}
+
+
+/* ---------- per page pictures ----------
+   Set on <main> by the layout, so both .hero and .hero-spacer inherit it.
+   Swap the stake conference picture by pointing this at another file.
+   ------------------------------------------------------------------- */
+
+.hero-conference {
+    --hero-image: url('/assets/images/dp-west-sunset-photo-enhanced.webp');
 }

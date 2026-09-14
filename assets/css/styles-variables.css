@@ -26,9 +26,22 @@
   /* lifts the sunset in the header strip; past ~1.75 the sky posterises */
   --header-image-filter: saturate(1.5) contrast(1.08);
 
-  /* deseret-peak-temple.webp is 1000x563; driving the hero height from the
-     image's own aspect ratio means it is never cropped at full page width */
-  --hero-ratio: 1.7762;
-  --hero-height: min(calc(100vw / var(--hero-ratio)), 100vh);
+  /* The hero picture. To swap it: drop the file in assets/images, point
+     --hero-image at it, and set --hero-ratio to the new file's width / height.
+     The ratio only sizes the portrait hero, where the photo is the whole hero;
+     getting it wrong shows a band of backdrop rather than cropping anything.
+     The current photo is 1672x941. */
+  --hero-image: url('/assets/images/dp-west-sunset-photo-enhanced.webp');
+  --hero-ratio: 1.7768;
+
+  /* how much of the screen the hero takes when the viewport is horizontal;
+     the remainder is the content peeking in below it */
+  --hero-height-landscape: 68vh;
+
+  /* where the photo sits inside the hero. Portrait default puts it in the
+     upper half of the phone; the landscape rule re-centres it. */
+  --hero-photo-y: 32%;
+  --hero-blur: 32px;
+  --hero-backdrop: #2a3038;
   --hero-scrim-bottom: rgba(0, 0, 0, 0.55);
 }
