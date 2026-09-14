@@ -24,6 +24,14 @@ class ResourceService {
     versions = null
     data = {}
 
+    /**
+     * Pages with no "Refresh Data" control opt out of the browser caches so a
+     * reload always shows what is in the spreadsheets. Set by the layout - see
+     * _layouts/stake-conference-home.html. The in-memory `data` cache still
+     * applies, so a sheet is fetched once per page load, not once per lookup.
+     */
+    cacheEnabled = window.resourceCacheEnabled !== false
+
     fetchUrl = async (key) => {
        
         const url = this.urls[key]
@@ -41,22 +49,25 @@ class ResourceService {
 
         //see if we already pulled from session
         if(this.versions) return this.versions
-            
-        let versions = sessionStorage.getItem(key)
 
-        // check if we need to pull from spreadsheet
-        if(versions) {
-            this.versions = JSON.parse(versions)
-            return this.versions
-        } 
+        if(this.cacheEnabled) {
+            const cached = sessionStorage.getItem(key)
 
-        versions = await this.fetchUrl(key)
-        
+            // check if we need to pull from spreadsheet
+            if(cached) {
+                this.versions = JSON.parse(cached)
+                return this.versions
+            }
+        }
+
+        const versions = await this.fetchUrl(key)
+
         this.versions = versions
-        sessionStorage.setItem(key, JSON.stringify(versions))
+
+        if(this.cacheEnabled) sessionStorage.setItem(key, JSON.stringify(versions))
 
         return this.versions
-        
+
     }
 
     clearCache = async() => {
@@ -98,7 +109,7 @@ class ResourceService {
 
 
     getData = async (key) => {
-        if (!this.data.hasOwnProperty(key)) {
+        if (this.cacheEnabled && !this.data.hasOwnProperty(key)) {
             await this.loadLocal(key)
         }
 
@@ -107,7 +118,7 @@ class ResourceService {
             this.data[key] = data;
 
             //cache the loaded data to localStorage
-            this.saveToLocal(data, key)
+            if (this.cacheEnabled) this.saveToLocal(data, key)
 
         }
         return this.data[key]

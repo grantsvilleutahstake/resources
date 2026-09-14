@@ -17,6 +17,11 @@
   <link rel="stylesheet" href="/assets/css/styles-markdown.css">
   <link rel="stylesheet" href="/assets/css/styles-hero.css">
 
+  <!-- These pages have no "Refresh Data" control, so they never read the
+       browser caches: every load pulls current data from the spreadsheets.
+       Must be set before guide-app.js constructs the service. -->
+  <script>window.resourceCacheEnabled = false</script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 
