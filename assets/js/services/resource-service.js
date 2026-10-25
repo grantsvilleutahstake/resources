@@ -1,7 +1,6 @@
 class ResourceService {
 
     urls = {
-        Versions:`https://docs.google.com/spreadsheets/d/e/2PACX-1vQVftOfID3yrlP8nTrNgXb-h5sxzwh7lm5A275ktecgevMl3A4rnYz2IaEXtZDizMgspG5elUH8HVFd/pub?output=csv`,
         Buildings:`https://docs.google.com/spreadsheets/d/e/2PACX-1vT1iT5Bbu7lCzM0dkPb6QUdmIdgff6PrFsEd7PQanB1VVCxaGyIlC24OOvTOqkCMjC6ztjv9n44VpaO/pub?gid=156666937&single=true&output=csv`,
         Callings:`https://docs.google.com/spreadsheets/d/e/2PACX-1vS9FzTQXNYIj838gubnNXyJvQ086V1nRoRsjzLbSMCAkeRYCCd2IKvYI80KUDDczEOYb8eAH5ifDEBq/pub?output=csv`,
         PresidencyAssignments:`https://docs.google.com/spreadsheets/d/e/2PACX-1vRexTnEzD9BuIokJ3VXyKOUxY-h0cQKmRWVoMEFot5tIKzJMPYpKV_QdY6nBBM9vEVsZXxKch3IcYRP/pub?gid=1193891930&single=true&output=csv`,
@@ -21,7 +20,8 @@ class ResourceService {
         Welfare:`https://docs.google.com/spreadsheets/d/e/2PACX-1vTEWQtMCKDCVlKyyrfdUMd-DfTZplZvXTIuXIP7m7zsGo0bBYGjhqio2AY6W0lfMk9MZTVJNrQ-2G5x/pub?gid=1332917091&single=true&output=csv`
     }
 
-    versions = null
+    // key -> promise of the sheet's rows, so a sheet is requested once per page
+    // load even when several callers ask for it at the same time
     data = {}
 
     /**
@@ -33,41 +33,17 @@ class ResourceService {
     cacheEnabled = window.resourceCacheEnabled !== false
 
     fetchUrl = async (key) => {
-       
+
         const url = this.urls[key]
         const response = await fetch(url)
+
+        // never parse (and cache) an error page as if it were the sheet
+        if (!response.ok) throw new Error(`${key}: ${response.status} ${response.statusText}`)
 
         const csv = await response.text()
         const data = Papa.parse(csv, { header: true, skipEmptyLines: true, dynamicTyping: true }).data
 
         return data
-    }
-
-
-    getVersions = async() => {
-        const key = 'Versions'
-
-        //see if we already pulled from session
-        if(this.versions) return this.versions
-
-        if(this.cacheEnabled) {
-            const cached = sessionStorage.getItem(key)
-
-            // check if we need to pull from spreadsheet
-            if(cached) {
-                this.versions = JSON.parse(cached)
-                return this.versions
-            }
-        }
-
-        const versions = await this.fetchUrl(key)
-
-        this.versions = versions
-
-        if(this.cacheEnabled) sessionStorage.setItem(key, JSON.stringify(versions))
-
-        return this.versions
-
     }
 
     clearCache = async() => {
@@ -81,45 +57,59 @@ class ResourceService {
             data: data
         }
 
-        localStorage.setItem(key, JSON.stringify(body))
-
-    }
-
-    loadLocal = async (key) => {
-
         try {
-            const body = JSON.parse(localStorage.getItem(key))
-            const currentTime = Date.now()
-
-            // check if data needs to be refreshed
-            const versions = await this.getVersions()
-            const version = versions.find(version => version.Key == key)
-
-            const versionDate = Date.parse(version.Date)
-            if(versionDate > body.saveDate) {
-                localStorage.removeItem(key)
-            } else {
-                this.data[key] = body.data
-            }
+            localStorage.setItem(key, JSON.stringify(body))
         } catch (e) {
             console.log(e)
         }
 
     }
 
+    loadLocal = (key) => {
 
-    getData = async (key) => {
-        if (this.cacheEnabled && !this.data.hasOwnProperty(key)) {
-            await this.loadLocal(key)
+        try {
+            const body = JSON.parse(localStorage.getItem(key))
+            return body ? body.data : null
+        } catch (e) {
+            console.log(e)
+            return null
         }
 
-        if (!this.data.hasOwnProperty(key)) {
-            const data = await this.fetchUrl(key)
-            this.data[key] = data;
+    }
 
-            //cache the loaded data to localStorage
+    /**
+     * Stale-while-revalidate: if the sheet is cached, return the cached rows
+     * immediately and fetch the sheet in the background. When the sheet has
+     * changed the cache is updated, so the next page view shows the new data,
+     * and a `resource-data-changed` event (detail = sheet key) is fired on
+     * `document` for pages that want to re-render straight away.
+     */
+    loadData = async (key) => {
+        const cached = this.cacheEnabled ? this.loadLocal(key) : null
+
+        const fresh = this.fetchUrl(key).then(data => {
             if (this.cacheEnabled) this.saveToLocal(data, key)
+            return data
+        })
 
+        if (!cached) return fresh
+
+        fresh.then(data => {
+            if (JSON.stringify(data) === JSON.stringify(cached)) return
+
+            this.data[key] = Promise.resolve(data)
+            document.dispatchEvent(new CustomEvent('resource-data-changed', { detail: key }))
+        }).catch(e => console.log(e)) // offline or Google is down - keep showing the cache
+
+        return cached
+    }
+
+    getData = (key) => {
+        if (!this.data.hasOwnProperty(key)) {
+            this.data[key] = this.loadData(key)
+
+            // don't keep a failed request around - let the next caller try again
+            this.data[key].catch(() => delete this.data[key])
         }
         return this.data[key]
     }
